@@ -1,0 +1,22 @@
+# requirements.txt
+
+# --- Data Analysis and Manipulation ---
+pandas
+numpy
+scipy
+
+# --- Machine Learning and Modeling ---
+# scikit-learn includes basic models and metrics
+scikit-learn
+xgboost
+catboost
+
+# --- Project Package and Supporting Tools ---
+# A more flexible object serialization library than pickle
+dill
+
+# --- Web Application and Deployment ---
+# Our web framework
+Django
+# The web server used to deploy Django
+gunicorn

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredi Risk Tahmini</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #444; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], select { padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        input[type="submit"] { grid-column: 1 / -1; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #0056b3; }
+        .result { margin-top: 30px; padding: 20px; border-radius: 4px; text-align: center; font-size: 20px; }
+        .result-safe { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .result-risk { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kredi Risk Tahmin Modeli</h1>
+        <p>Lütfen kredi başvurusu için gerekli bilgileri girin.</p>
+        
+        <form action="{% url 'predict' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="loan_amnt">Kredi Miktarı ($)</label>
+                <input type="number" step="100" id="loan_amnt" name="loan_amnt" value="{{ form_data.loan_amnt|default:'12000' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="term">Vade (Ay)</label>
+                <select id="term" name="term">
+                    <option value=" 36 months" {% if form_data.term == ' 36 months' %}selected{% endif %}> 36 months</option>
+                    <option value=" 60 months" {% if form_data.term == ' 60 months' %}selected{% endif %}> 60 months</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="int_rate">Faiz Oranı (%)</label>
+                <input type="number" step="0.01" id="int_rate" name="int_rate" value="{{ form_data.int_rate|default:'13.5' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="installment">Aylık Taksit ($)</label>
+                <input type="number" step="0.01" id="installment" name="installment" value="{{ form_data.installment|default:'400' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="sub_grade">Kredi Alt Notu</label>
+                <select id="sub_grade" name="sub_grade">
+                    {% for grade in "ABCDEFG" %}
+                        {% for num in "12345" %}
+                        <option value="{{ grade }}{{ num }}" {% if form_data.sub_grade == grade|add:num %}selected{% endif %}>{{ grade }}{{ num }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="home_ownership">Ev Sahipliği</label>
+                <select id="home_ownership" name="home_ownership">
+                    <option value="RENT" {% if form_data.home_ownership == 'RENT' %}selected{% endif %}>RENT</option>
+                    <option value="MORTGAGE" {% if form_data.home_ownership == 'MORTGAGE' %}selected{% endif %}>MORTGAGE</option>
+                    <option value="OWN" {% if form_data.home_ownership == 'OWN' %}selected{% endif %}>OWN</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="annual_inc">Yıllık Gelir ($)</label>
+                <input type="number" step="1000" id="annual_inc" name="annual_inc" value="{{ form_data.annual_inc|default:'65000' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="verification_status">Gelir Doğrulama Durumu</label>
+                <select id="verification_status" name="verification_status">
+                    <option value="Verified" {% if form_data.verification_status == 'Verified' %}selected{% endif %}>Verified</option>
+                    <option value="Source Verified" {% if form_data.verification_status == 'Source Verified' %}selected{% endif %}>Source Verified</option>
+                    <option value="Not Verified" {% if form_data.verification_status == 'Not Verified' %}selected{% endif %}>Not Verified</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="issue_d">Kredi Veriliş Tarihi (Örn: Jan-2015)</label>
+                <input type="text" id="issue_d" name="issue_d" value="{{ form_data.issue_d|default:'Jan-2015' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="purpose">Kredi Amacı</label>
+                <input type="text" id="purpose" name="purpose" value="{{ form_data.purpose|default:'debt_consolidation' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="dti">Borç/Gelir Oranı</label>
+                <input type="number" step="0.1" id="dti" name="dti" value="{{ form_data.dti|default:'18.5' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="earliest_cr_line">İlk Kredi Hesabı Tarihi (Örn: Jun-1990)</label>
+                <input type="text" id="earliest_cr_line" name="earliest_cr_line" value="{{ form_data.earliest_cr_line|default:'Jun-1990' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="open_acc">Açık Hesap Sayısı</label>
+                <input type="number" id="open_acc" name="open_acc" value="{{ form_data.open_acc|default:'12' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pub_rec">Kamu Kaydı Sayısı</label>
+                <input type="number" id="pub_rec" name="pub_rec" value="{{ form_data.pub_rec|default:'0' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="revol_bal">Döner Bakiye ($)</label>
+                <input type="number" id="revol_bal" name="revol_bal" value="{{ form_data.revol_bal|default:'15000' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="revol_util">Kredi Kullanım Oranı (%)</label>
+                <input type="number" step="0.1" id="revol_util" name="revol_util" value="{{ form_data.revol_util|default:'45.5' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="total_acc">Toplam Hesap Sayısı</label>
+                <input type="number" id="total_acc" name="total_acc" value="{{ form_data.total_acc|default:'25' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="application_type">Başvuru Tipi</label>
+                <select id="application_type" name="application_type">
+                    <option value="Individual" {% if form_data.application_type == 'Individual' %}selected{% endif %}>Individual</option>
+                    <option value="Joint" {% if form_data.application_type == 'Joint' %}selected{% endif %}>Joint App</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="initial_list_status">Listeleme Durumu</label>
+                <select id="initial_list_status" name="initial_list_status">
+                    <option value="w" {% if form_data.initial_list_status == 'w' %}selected{% endif %}>Whole (w)</option>
+                    <option value="f" {% if form_data.initial_list_status == 'f' %}selected{% endif %}>Fractional (f)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mort_acc">İpotek Hesabı Sayısı</label>
+                <input type="number" id="mort_acc" name="mort_acc" value="{{ form_data.mort_acc|default:'2' }}" required>
+            </div>
+             <div class="form-group">
+                <label for="pub_rec_bankruptcies">İflas Kaydı Sayısı</label>
+                <input type="number" id="pub_rec_bankruptcies" name="pub_rec_bankruptcies" value="{{ form_data.pub_rec_bankruptcies|default:'0' }}" required>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="address">Adres (Posta Kodu için)</label>
+                <input type="text" id="address" name="address" value="{{ form_data.address|default:'123 Main St, Anytown, USA 12345' }}" required>
+            </div>
+
+            <input type="submit" value="Tahmin Et">
+        </form> 
+        
+        {% if results %}
+        <div class="result {% if 'Risksiz' in results %}result-safe{% else %}result-risk{% endif %}">
+            <h2>Tahmin Sonucu:</h2>
+            <p>{{ results }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

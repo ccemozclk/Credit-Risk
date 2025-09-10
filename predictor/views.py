@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-import pandas as pd
 import re
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
@@ -10,11 +9,16 @@ def home_view(request):
 def predict_view(request):
     results = None
     if request.method == 'POST':
-        try:
-            address_str = request.POST.get('address', '')
-            zipcode_match = re.search(r'(\d{5})$', address_str.strip())
-            zipcode_str = zipcode_match.group(1) if zipcode_match else "00000"
-            data = CustomData(
+        return render(request, 'model.html')
+        
+    results = None
+    form_data = request.POST # Form verilerini her durumda alalım
+
+    try:
+        address_str = request.POST.get('address', '')
+        zipcode_match = re.search(r'(\d{5})$', address_str.strip())
+        zipcode_str = zipcode_match.group(1) if zipcode_match else "00000"
+        data = CustomData(
                 
                 loan_amnt=float(request.POST.get('loan_amnt')),
                 int_rate=float(request.POST.get('int_rate')),
@@ -44,22 +48,21 @@ def predict_view(request):
                 address=address_str, 
                 
                 zipcode=zipcode_str
-            )
+        )
             
-            pred_df = data.get_data_as_dataframe()
+        pred_df = data.get_data_as_dataframe()
             
-            predict_pipeline = PredictPipeline()
-            prediction = predict_pipeline.predict(pred_df)
+        predict_pipeline = PredictPipeline()
+        prediction = predict_pipeline.predict(pred_df)
             
-            results = "Charged Off" if prediction[0] == 1 else "Fully Paid"
+        results = "Charged Off" if prediction[0] == 1 else "Fully Paid"
 
-        except Exception as e:
-            results = f"An Error Occured: {e}"
+    except Exception as e:
+        results = f"An Error Occured: {e}"
         
-        context = {
+    context = {
             'results': results,
-            'form_data': request.POST 
+            'form_data': form_data 
         }
-        return render(request, 'index.html', context)
+    return render(request, 'model.html', context)
     
-    return render(request, "index.html")

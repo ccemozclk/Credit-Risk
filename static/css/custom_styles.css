@@ -663,3 +663,69 @@
 }
 
 .jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+
+
+.bootstrap-select > .btn.dropdown-toggle {
+        
+            height: 33.2812px !important;
+            font-size: 14px !important; 
+            box-sizing: border-box !important;
+            padding-bottom: 5.25px !important;
+            padding-top: 5.25px !important;
+            padding-left: 10.5px !important;
+            padding-right: 10.5px!important;
+            }
+
+.form-group .bootstrap-select {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        transform: none !important;
+
+        
+        width: 100% !important;
+      }
+
+.form-col-fix {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.box .form .form-control,
+.box .form .bootstrap-select > .btn.dropdown-toggle {
+    background-color: #313a52 !important;
+    color: #aeb4c6 !important;
+    border: 1px solid #444c68 !important;
+}
+
+
+.dropdown-menu.inner.show {
+    background-color: #313a52 !important; 
+    border: 1px solid #444c68 !important;
+}
+
+
+.box .form .form-control::placeholder {
+    color: #aeb4c6 !important; 
+    opacity: 1 !important;
+}
+
+
+.box .form .dropdown-menu.inner li a span.text {
+    color: #aeb4c6 !important;
+}
+
+
+.box .form .dropdown-menu.inner li.active a,
+.box .form .dropdown-menu.inner li a:hover,
+.box .form .dropdown-menu.inner li a:focus {
+    background-color: #444c68 !important; 
+    color: #ffffff !important; 
+}
+
+.form-label.highlight {
+    color: #ffd966 !important;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}

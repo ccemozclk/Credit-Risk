@@ -16,18 +16,7 @@
         <link rel="stylesheet" href="{% static 'assets/vendor_components/select2/dist/css/select2.min.css' %}">
         <link rel="stylesheet" href="{% static 'assets/icons/icomoon/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/custom_styles.css' %}">
-        <style>
-            .bootstrap-select > .btn.dropdown-toggle {
         
-            height: 33.2812px !important;
-            font-size: 14px !important; 
-            box-sizing: border-box !important;
-            padding-bottom: 5.25px !important;
-            padding-top: 5.25px !important;
-            padding-left: 10.5px !important;
-            padding-right: 10.5px!important;
-            }
-        </style>
     </head>
 
     <body class="dark-skin sidebar-mini theme-primary fixed" style="height: auto; min-height: 100%;">
@@ -70,7 +59,23 @@
                             </ul>
                         </div>
                         <div class="navbar-custom-menu r-side">
+                            <ul class="nav navbar-nav">
+                                <li class="btn-group d-lg-inline-flex d-none">
+                                    <div class="app-menu">
+                                        <div class="search-bx mx-5">
+                                            <form>
+                                                <div class="input-group">
+                                                    <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                                                    <div class="input-group-append">
+									                    <button class="btn" type="submit" id="button-addon3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+								                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
 
+                            </ul>
                         </div>
                     </div>
                 </nav>
@@ -92,8 +97,9 @@
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li class="active">
-                                            <a href="index.html">
+                                        {% url 'predictor:home' as home_url %}
+                                        <li class="{% if request.path == home_url %}active{% endif %}">
+                                            <a href="{{ home_url }}">
                                                 <i class="icon-Chart-pie">
                                                     <span class="path1"></span><span class="path2"></span>
                                                 </i>
@@ -101,15 +107,11 @@
 
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="{% url 'predictor:predict' %}">
-                                                <i class="icon-Write">
-                                                    <span class="path1">
-
-                                                    </span>
-                                                    <span class="path2">
-
-                                                    </span>
+                                        {% url 'predictor:predict' as predict_url %}
+                                        <li class="{% if request.path == predict_url %}active{% endif %}">
+                                            <a href="{{ predict_url }}">
+                                                <i class="glyphicon glyphicon-triangle-right">
+                                                    <span class="path1"></span><span class="path2"></span>
                                                 </i>
                                                 Credit Risk Model
                                             </a>
@@ -158,12 +160,7 @@
         <script src="{% static 'assets/vendor_components/apexcharts-bundle/dist/apexcharts.js' %}"></script>
        
         <script src="{% static 'js/pages/chat-popup.js' %}"></script>
-
-        <script>
-            $(function () {
-                $('.selectpicker').selectpicker();
-            });
-        </script>
+        <script src="{% static 'js/custom_styles.js' %}"></script>
 
     </body>
 </html>

@@ -20,50 +20,50 @@
 </div>
 <!-- Main content -->
 <section class="content">
-    <div class="col-lg-6 col-12">
+    <div class="col-lg-9 col-12">
         <div class="box">
             <form class="form" action="{% url 'predictor:predict' %}" method="post">
                 {% csrf_token %}
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="loan_amnt">Loan Amount ($)</label>
-								<input class="form-control" type="number" step="1000" id="loan_amnt" name="loan_amnt" value="{{ form_data.loan_amnt}}" placeholder="12,000 $" required>
+								<input class="form-control" type="number" step="1000" id="loan_amnt" name="loan_amnt" value="{{ form_data.loan_amnt}}" placeholder="12,000 $" required >
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
-						        <label class="form-label">Term (Months)</label>
+						        <label class="form-label" for="term">Term (Months)</label>
 						        <select class="selectpicker form-control" id="term" name="term" data-style="btn-light form-control">
-                                    <option class="form-control" value=" 36 months" {% if form_data.term == ' 36 months' %}selected{% endif %}> 36 months</option>
-                                    <option class="form-control" value=" 60 months" {% if form_data.term == ' 60 months' %}selected{% endif %}> 60 months</option>
+                                    <option class="form-control" value=" 36 months" {% if form_data.term == ' 36 months' %}selected{% endif %}>36 months</option>
+                                    <option class="form-control" value=" 60 months" {% if form_data.term == ' 60 months' %}selected{% endif %}>60 months</option>
 						        </select>
                                 
 					        </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="int_rate">Interest Rate (%)</label>
-								<input class="form-control" type="number" step="0.01" id="int_rate" name="int_rate" value="{{ form_data.int_rate }}" placeholder="13.5" required>
+								<input class="form-control" type="number" step="0.01" id="int_rate" name="int_rate" value="{{ form_data.int_rate }}" placeholder="13.5 %" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="installment">Installment ($)</label>
-								<input class="form-control" type="number" step="0.01" id="installment" name="installment" value="{{ form_data.installment }}" placeholder="400" required>
+								<input class="form-control" type="number" step="0.01" id="installment" name="installment" value="{{ form_data.installment }}" placeholder="400 $" required>
 							</div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 						        <label class="form-label" for="sub_grade">Credit Sub-Grade</label>
-						        <select class="form-control select2 select2-hidden-accessible" id="sub_grade" name="sub_grade" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+						        <select class="selectpicker form-control" id="sub_grade" name="sub_grade" data-style="btn-light form-control" >
                                     {% for grade in "ABCDEFG" %}
                                         {% for num in "12345" %}
                                         <option value="{{ grade }}{{ num }}" {% if form_data.sub_grade == grade|add:num %}selected{% endif %}>{{ grade }}{{ num }}</option>
@@ -72,10 +72,10 @@
 						        </select>
 					        </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 						        <label class="form-label" for="home_ownership">Home Ownership</label>
-						        <select class="form-control select2 select2-hidden-accessible" id="home_ownership" name="home_ownership" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+						        <select class="selectpicker form-control" id="home_ownership" name="home_ownership" data-style="btn-light form-control" >
                                     <option value="RENT" {% if form_data.home_ownership == 'RENT' %}selected{% endif %}>RENT</option>
                                     <option value="MORTGAGE" {% if form_data.home_ownership == 'MORTGAGE' %}selected{% endif %}>MORTGAGE</option>
                                     <option value="OWN" {% if form_data.home_ownership == 'OWN' %}selected{% endif %}>OWN</option>
@@ -83,39 +83,40 @@
                                     <option value="ANY" {% if form_data.home_ownership == 'ANY' %}selected{% endif %}>ANY</option>
                                     <option value="NONE" {% if form_data.home_ownership == 'NONE' %}selected{% endif %}>NONE</option>
                                     <option value="OTHER" {% if form_data.home_ownership == 'OTHER' %}selected{% endif %}>OTHER</option>
-						        </select><span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-uvmj-container"><span class="select2-selection__rendered" id="select2-uvmj-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-					        </div>
+						        </select>
+                            </div>
+                        </div>  
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="annual_inc">Annual Income ($)</label>
-								<input class="form-control" type="number" step="1000" id="annual_inc" name="annual_inc" value="{{ form_data.annual_inc }}" placeholder="65,000" required>
+								<input class="form-control" type="number" step="1000" id="annual_inc" name="annual_inc" value="{{ form_data.annual_inc }}" placeholder="65,000 $" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 						        <label class="form-label" for="verification_status">Verification Status</label>
-						        <select class="form-control select2 select2-hidden-accessible" id="verification_status" name="verification_status" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+						        <select class="selectpicker form-control" id="verification_status" name="verification_status" data-style="btn-light form-control" >
                                     <option value="Verified" {% if form_data.verification_status == 'Verified' %}selected{% endif %}>Verified</option>
                                     <option value="Source Verified" {% if form_data.verification_status == 'Source Verified' %}selected{% endif %}>Source Verified</option>
                                     <option value="Not Verified" {% if form_data.verification_status == 'Not Verified' %}selected{% endif %}>Not Verified</option>
 
                                     
-						        </select><span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-uvmj-container"><span class="select2-selection__rendered" id="select2-uvmj-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-					        </div>
+						        </select>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="issue_d">Issue Date</label>
 								<input class="form-control" type="text" id="issue_d" name="issue_d" value="{{ form_data.issue_d }}" placeholder="Jan-2015" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="purpose">Purpose</label>
 								<input class="form-control" type="text" id="purpose" name="purpose" value="{{ form_data.purpose }}" placeholder="debt_consolidation" required>
@@ -123,14 +124,14 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
-								<label class="form-label" for="dti">Dept To Income</label>
-								<input class="form-control" step="0.1" type="number" id="dti" name="dti" value="{{ form_data.dti }}" placeholder="18.5" required>
+								<label class="form-label" for="dti">Dept To Income (%)</label>
+								<input class="form-control" step="0.1" type="number" id="dti" name="dti" value="{{ form_data.dti }}" placeholder="18.5 %" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="earliest_cr_line">Earliest Credit Line</label>
 								<input class="form-control" type="text" id="earliest_cr_line" name="earliest_cr_line" value="{{ form_data.earliest_cr_line }}" placeholder="Jun-1990" required>
@@ -138,14 +139,14 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="open_acc">Open Account</label>
 								<input class="form-control" type="number" id="open_acc" name="open_acc" value="{{ form_data.open_acc }}" placeholder="12" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="pub_rec">Public Records</label>
 								<input class="form-control" type="number" id="pub_rec" name="pub_rec" value="{{ form_data.pub_rec }}" placeholder="0" required>
@@ -153,54 +154,54 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
-								<label class="form-label" for="revol_bal">Revol Balance</label>
-								<input class="form-control" type="number" id="revol_bal" name="revol_bal" value="{{ form_data.revol_bal }}" placeholder="15,000" required>
+								<label class="form-label" for="revol_bal">Revol Balance ($)</label>
+								<input class="form-control" type="number" id="revol_bal" name="revol_bal" value="{{ form_data.revol_bal }}" placeholder="15,000 $" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="revol_util">Revol Utility (%)</label>
-								<input class="form-control" type="number" step="0.1" id="revol_util" name="revol_util" value="{{ form_data.revol_util }}" placeholder="45.5" required>
+								<input class="form-control" type="number" step="0.1" id="revol_util" name="revol_util" value="{{ form_data.revol_util }}" placeholder="45.5 %" required>
 							</div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="total_acc">Total Accounts</label>
 								<input class="form-control" type="number" id="total_acc" name="total_acc" value="{{ form_data.total_acc }}" placeholder="25" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 						        <label class="form-label" for="application_type">Application Type</label>
-						        <select class="form-control select2 select2-hidden-accessible" id="application_type" name="application_type" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+						        <select class="selectpicker form-control" id="application_type" name="application_type" data-style="btn-light form-control">
                                     <option value="Individual" {% if form_data.application_type == 'Individual' %}selected{% endif %}>Individual</option>
                                     <option value="Joint" {% if form_data.application_type == 'Joint' %}selected{% endif %}>Joint</option>
                                     <option value="Direct_Pay" {% if form_data.application_type == 'Direct_Pay' %}selected{% endif %}>Direct_Pay</option>
 
                                     
-						        </select><span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-uvmj-container"><span class="select2-selection__rendered" id="select2-uvmj-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-					        </div>
+						        </select>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 						        <label class="form-label" for="initial_list_status">Initial List Status</label>
-						        <select class="form-control select2 select2-hidden-accessible" id="initial_list_status" name="initial_list_status" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+						        <select class="selectpicker form-control" id="initial_list_status" name="initial_list_status" data-style="btn-light form-control" >
                                     <option value="w" {% if form_data.initial_list_status == 'w' %}selected{% endif %}>Whole (w)</option>
                                     <option value="f" {% if form_data.initial_list_status == 'f' %}selected{% endif %}>Fractional (f)</option>
                                     
-						        </select><span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-uvmj-container"><span class="select2-selection__rendered" id="select2-uvmj-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-					        </div>
+						        </select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="mort_acc">Mortgage Account</label>
 								<input class="form-control" type="number" id="mort_acc" name="mort_acc" value="{{ form_data.mort_acc }}" placeholder="2" required>
@@ -208,28 +209,49 @@
                         </div>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row form-row">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="pub_rec_bankruptcies">Public Records Bankruptcies</label>
 								<input class="form-control" type="number" id="pub_rec_bankruptcies" name="pub_rec_bankruptcies" value="{{ form_data.pub_rec_bankruptcies }}" placeholder="2" required>
 							</div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="address">Address</label>
 								<input class="form-control" type="text" id="address" name="address" value="{{ form_data.address }}" placeholder="123 Main St, Anytown, USA 12345" required>
 							</div>
                         </div>
                     </div>
-
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                         
+                            Give me result !
+                    </button>
                 </div>
             </form>
+            {% if results %}
+            <div class="row mt-4">
+                <div class="col-12">
+                    {% if 'Fully Paid' in results %}
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"><i class="fa fa-check-circle me-2"></i> Prediction Result :</h4>
+                        <p>{{ results }}</p>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading"><i class="fa fa-times-circle me-2"></i> Prediction Result :</h4>
+                        <p>{{ results }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
         </div>
     </div>
 
 </section>
-
-
 {% endblock content %}
 

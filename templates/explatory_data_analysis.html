@@ -21,50 +21,202 @@
     {% if error %}
     <div class="alert alert-danger">{{ error }}</div>
     {% else %}
-    <div class="row">
-        <div class="col-lg-6 col-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h4 class="my-20 text-dark box-title">Loan Status Value Counts</h4>
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Status Value Counts</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="loanStatusChart" class="h-400"></div> 
+                    </div>
                 </div>
-                <div class="box-body">
-                    <div id="loanStatusChart" class="h-400"></div> 
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Amount Distribution</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="loanAmntHistChart" class="h-400"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments Related With Loan Status and Loan Amounts</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    <div class="box-body" style="display: none;"> <h4>1. Loan Status Value Counts</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>In the graph on the left, we can clearly see that the number of people who have fully paid off their loans (Fully Paid) is much higher than the number of people who have defaulted on their loans (Charged Off). The difference appears to be approximately 4 to 1 or 5 to 1 in terms of ratio.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This highlights one of the most critical issues of our project from the outset: the <strong>Imbalanced Dataset Problem.</strong></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Meaning:</strong>
+                                <ul>
+                                    <li>Since our model sees the “paid” class much more frequently, it will tend to make biased predictions toward this class. If we do not address this issue, the model we build could achieve an accuracy rate of over 80% by predicting that every loan is “likely to be paid.” However, this model would have no practical value because it would completely fail to identify risky customers, i.e., the Charged Off class, which is our primary objective.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Note for the Roadmap:</strong>
+                                <ul>
+                                    <li>This imbalance explains why we should focus on metrics such as <strong>Precision, Recall, F1-Score, and AUC</strong> instead of accuracy during the modeling phase, and why we should use resampling techniques like SMOTE or class weights. This graph reminds us that these strategies are not “preferences” but “necessities.”</li>
+                                </ul>
+                            </li>
+                        </ul>
 
-        <div class="col-lg-6 col-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h4 class="my-20 text-dark box-title">Loan Amount Distribution</h4>
-                </div>
-                <div class="box-body">
-                    <div id="loanAmntHistChart" class="h-400"></div>
+                        <hr class="my-4"> <h4>2. Loan Amount Distribution</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The histogram on the right clearly shows that loan amounts (loan_amnt) do not follow a normal distribution. Instead, there are multiple peaks (multi-modal) in the distribution. There are noticeable clusters around round numbers such as 10,000, 15,000, 20,000, and 35,000.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation:</strong>
+                                <ul>
+                                    <li>This distribution provides important insights into customer behavior and the structure of credit products:
+                                        <ul>
+                                            <li><strong>Human Psychology and Demand:</strong> When applying for a loan, people typically prefer round numbers like “10,000” over “9,500.” This is the primary reason behind the peaks in the graph.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Non-Homogeneous Customer Groups:</strong>
+                                <ul>
+                                    <li>These peak points may indicate the presence of non-homogeneous customer groups with different needs in our dataset. For example, a small peak may represent small-need loans, peaks in the 10,000-20,000 range may represent debt consolidation loans, and the largest peak at 35,000 may represent different segments such as larger investments or business loans.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Feature Engineering Strategy:</strong>
+                                <ul>
+                                    <li>Instead of directly feeding such a complex distribution of a continuous variable into the model, it is a very sensible strategy to categorize it (create loan_amnt_cat using pd.cut). This way, the model can learn these non-linear relationships more easily.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-12 col-12">
-            <div class="box box-slided-up">
-                <div class="box-header with-border">
-                    <h4 class="box-title"><strong>Observations & Analytical Comments Related With Loan Status and Loan Amounts</strong></h4>
-                    <ul class="box-controls pull-right">
-                        <li><a class="box-btn-slide" href="#"></a></li>
-                    </ul>
+    <hr class="my-4"> 
+    <!-- 2nd Line -->
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Amount Categories Frequency</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="loanCatsFreqChart" class="h-400"></div> 
+                    </div>
                 </div>
-                <div class="box-body" style="display: none;">
-                    <h5>1. Loan Status Value Counts</h5>
-                    
-                    <p>
-                        Bu çubuk grafiği, veri setindeki kredilerin ne kadarının başarıyla geri ödendiğini ("Fully Paid") ve ne kadarının batık kredi ("Charged Off") olduğunu gösterir. Gördüğümüz gibi, kredilerin büyük bir çoğunluğu başarıyla geri ödenmiştir. Bu, genel olarak kredi portföyünün sağlıklı olduğuna işaret edebilir, ancak "Charged Off" olan kredilerin sayısı yine de önemli bir risk faktörünü temsil etmektedir.
-                    </p>
-                    <br>
-                    <h5>Loan Amount Distribution (Kredi Miktarı Dağılımı)</h5>
-                    <p>
-                        Bu histogram, talep edilen kredi miktarlarının dağılımını görselleştirir. Grafikte belirli miktarlarda (örneğin 10.000$, 15.000$, 20.000$) yığılmalar olduğunu görebiliriz. Bu, müşterilerin genellikle yuvarlak rakamlarla kredi talep etme eğiliminde olduğunu gösterir. Dağılımın genel şekli, hangi kredi miktarı aralıklarında daha fazla talep olduğunu anlamamıza yardımcı olur.
-                    </p>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Default Rate by Loan Amount Category</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="loanStatusMeanChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments Related With Loan Status and Loan Amounts</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    <div class="box-body" style="display: none;"> <h4>1. Loan Status Value Counts</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>In the graph on the left, we can clearly see that the number of people who have fully paid off their loans (Fully Paid) is much higher than the number of people who have defaulted on their loans (Charged Off). The difference appears to be approximately 4 to 1 or 5 to 1 in terms of ratio.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This highlights one of the most critical issues of our project from the outset: the <strong>Imbalanced Dataset Problem.</strong></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Meaning:</strong>
+                                <ul>
+                                    <li>Since our model sees the “paid” class much more frequently, it will tend to make biased predictions toward this class. If we do not address this issue, the model we build could achieve an accuracy rate of over 80% by predicting that every loan is “likely to be paid.” However, this model would have no practical value because it would completely fail to identify risky customers, i.e., the Charged Off class, which is our primary objective.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Note for the Roadmap:</strong>
+                                <ul>
+                                    <li>This imbalance explains why we should focus on metrics such as <strong>Precision, Recall, F1-Score, and AUC</strong> instead of accuracy during the modeling phase, and why we should use resampling techniques like SMOTE or class weights. This graph reminds us that these strategies are not “preferences” but “necessities.”</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> <h4>2. Loan Amount Distribution</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The histogram on the right clearly shows that loan amounts (loan_amnt) do not follow a normal distribution. Instead, there are multiple peaks (multi-modal) in the distribution. There are noticeable clusters around round numbers such as 10,000, 15,000, 20,000, and 35,000.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation:</strong>
+                                <ul>
+                                    <li>This distribution provides important insights into customer behavior and the structure of credit products:
+                                        <ul>
+                                            <li><strong>Human Psychology and Demand:</strong> When applying for a loan, people typically prefer round numbers like “10,000” over “9,500.” This is the primary reason behind the peaks in the graph.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Non-Homogeneous Customer Groups:</strong>
+                                <ul>
+                                    <li>These peak points may indicate the presence of non-homogeneous customer groups with different needs in our dataset. For example, a small peak may represent small-need loans, peaks in the 10,000-20,000 range may represent debt consolidation loans, and the largest peak at 35,000 may represent different segments such as larger investments or business loans.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Feature Engineering Strategy:</strong>
+                                <ul>
+                                    <li>Instead of directly feeding such a complex distribution of a continuous variable into the model, it is a very sensible strategy to categorize it (create loan_amnt_cat using pd.cut). This way, the model can learn these non-linear relationships more easily.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,4 +228,5 @@
 {{ status_data|json_script:"status-data-data" }}
 {{ loan_amnt_labels|json_script:"loan-amnt-labels-data" }}
 {{ loan_amnt_data|json_script:"loan-amnt-data-data" }}
+{{ loan_amnt_kde_data|json_script:"loan-amnt-kde-data" }}
 {% endblock content %}

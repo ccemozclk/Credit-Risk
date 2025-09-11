@@ -729,3 +729,14 @@
     font-weight: bold;
     transition: color 0.3s ease-in-out;
 }
+
+
+#loanStatusChart .apexcharts-bar-area {
+        transition: opacity 0.2s ease-in-out !important;
+      }
+
+#loanStatusChart .apexcharts-series:hover .apexcharts-bar-area {
+        filter: none !important;
+        -webkit-filter: none !important; 
+        opacity: 0.85 !important; 
+      }

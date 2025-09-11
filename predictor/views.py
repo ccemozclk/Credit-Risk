@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect 
 import json
 import pandas as pd
+import numpy as np
 import re
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
+from scipy.stats import gaussian_kde
 
 def home_view(request):
     return render(request, "index.html")
@@ -17,18 +19,45 @@ def eda_view(request):
     loan_status_counts = df['loan_status'].value_counts()
     status_labels = loan_status_counts.index.tolist()
     status_data = loan_status_counts.values.tolist()
-    bins = [0, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]
-    labels = ['0-5k', '5k-10k', '10k-15k', '15k-20k', '20k-25k', '25k-30k', '30k-35k', '35k-40k']
+
+
+    bins = np.arange(0, 40001, 2000) 
+    labels = [f'{int(i/1000)}k-{int((i+2000)/1000)}k' for i in bins[:-1]]
     df['loan_amnt_binned'] = pd.cut(df['loan_amnt'], bins=bins, labels=labels, right=False)
     loan_amnt_counts = df['loan_amnt_binned'].value_counts().sort_index()
     loan_amnt_labels = loan_amnt_counts.index.tolist()
     loan_amnt_data = loan_amnt_counts.values.tolist()
 
+    bin_centers = [(bins[i] + bins[i+1]) / 2 for i in range(len(bins)-1)]
+    kde = gaussian_kde(df['loan_amnt'].dropna()) 
+    loan_amnt_kde_data = kde(bin_centers).tolist()
+
+
+
+    bins_cat = [0, 5000, 10000, 15000, 20000, 25000, 30000, 40000]
+    labels_cat = ['0-5k', '5k-10k', '10k-15k', '15k-20k', '20k-25k', '25k-30k', '30k-40k']
+    df['loan_amnt_cat'] = pd.cut(df['loan_amnt'], bins=bins_cat, labels=labels_cat)
+    df['loan_status_bin'] = df['loan_status'].map({'Fully Paid': 0, 'Charged Off': 1})
+    grouped_countplot = df.groupby(['loan_amnt_cat', 'loan_status']).size().unstack(fill_value=0)
+    cat_labels = grouped_countplot.index.tolist()
+    fully_paid_data = grouped_countplot['Fully Paid'].values.tolist()
+    charged_off_data = grouped_countplot['Charged Off'].values.tolist()
+
+    grouped_barplot = df.groupby('loan_amnt_cat')['loan_status_bin'].mean().reset_index()
+    mean_labels = grouped_barplot['loan_amnt_cat'].tolist()
+    mean_data = grouped_barplot['loan_status_bin'].tolist()
     context = {
         'status_labels': status_labels,
         'status_data': status_data,
         'loan_amnt_labels': loan_amnt_labels,
         'loan_amnt_data': loan_amnt_data,
+        'loan_amnt_kde_data': loan_amnt_kde_data,
+
+        'cat_labels': cat_labels,
+        'fully_paid_data': fully_paid_data,
+        'charged_off_data': charged_off_data,
+        'mean_labels': mean_labels,
+        'mean_data': mean_data,
     }
     
     return render(request, 'explatory_data_analysis.html', context)

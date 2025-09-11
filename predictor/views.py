@@ -1,10 +1,38 @@
 from django.shortcuts import render, redirect 
-
+import json
+import pandas as pd
 import re
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
 def home_view(request):
     return render(request, "index.html")
+
+def eda_view(request):
+    try:
+        df = pd.read_csv("notebook/data/lending_club_loan_two.csv")
+    except FileNotFoundError:
+        context = {'error': 'Veri dosyası "notebook/data/lending_club_loan_two.csv" bulunamadı.'}
+        return render(request, 'explatory_data_analysis.html', context)
+
+    loan_status_counts = df['loan_status'].value_counts()
+    status_labels = loan_status_counts.index.tolist()
+    status_data = loan_status_counts.values.tolist()
+    bins = [0, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000]
+    labels = ['0-5k', '5k-10k', '10k-15k', '15k-20k', '20k-25k', '25k-30k', '30k-35k', '35k-40k']
+    df['loan_amnt_binned'] = pd.cut(df['loan_amnt'], bins=bins, labels=labels, right=False)
+    loan_amnt_counts = df['loan_amnt_binned'].value_counts().sort_index()
+    loan_amnt_labels = loan_amnt_counts.index.tolist()
+    loan_amnt_data = loan_amnt_counts.values.tolist()
+
+    context = {
+        'status_labels': status_labels,
+        'status_data': status_data,
+        'loan_amnt_labels': loan_amnt_labels,
+        'loan_amnt_data': loan_amnt_data,
+    }
+    
+    return render(request, 'explatory_data_analysis.html', context)
+    
 
 def clean_numeric(value_str):
     """This function removes characters such as None, space, comma, dollar sign and converts them to float."""

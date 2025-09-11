@@ -97,9 +97,9 @@
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        {% url 'predictor:home' as home_url %}
-                                        <li class="{% if request.path == home_url %}active{% endif %}">
-                                            <a href="{{ home_url }}">
+                                        {% url 'predictor:eda' as eda_url  %}
+                                        <li class="{% if request.path == eda_url %}active{% endif %}">
+                                            <a href="{{ eda_url }}">
                                                 <i class="icon-Chart-pie">
                                                     <span class="path1"></span><span class="path2"></span>
                                                 </i>

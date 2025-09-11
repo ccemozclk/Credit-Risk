@@ -29,7 +29,7 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="loan_amnt">Loan Amount ($)</label>
-								<input class="form-control" type="number" step="1000" id="loan_amnt" name="loan_amnt" value="{{ form_data.loan_amnt}}" placeholder="12,000 $" required >
+								<input class="form-control" type="number" step="1000" id="loan_amnt" name="loan_amnt" value="{{ form_data.loan_amnt}}" placeholder="example : 12,000 $" required >
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
@@ -48,13 +48,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="int_rate">Interest Rate (%)</label>
-								<input class="form-control" type="number" step="0.01" id="int_rate" name="int_rate" value="{{ form_data.int_rate }}" placeholder="13.5 %" required>
+								<input class="form-control" type="number" step="0.01" id="int_rate" name="int_rate" value="{{ form_data.int_rate }}" placeholder="example : 13.5 %" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="installment">Installment ($)</label>
-								<input class="form-control" type="number" step="0.01" id="installment" name="installment" value="{{ form_data.installment }}" placeholder="400 $" required>
+								<input class="form-control" type="number" step="0.01" id="installment" name="installment" value="{{ form_data.installment }}" placeholder="example : 400 $" required>
 							</div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="annual_inc">Annual Income ($)</label>
-								<input class="form-control" type="number" step="1000" id="annual_inc" name="annual_inc" value="{{ form_data.annual_inc }}" placeholder="65,000 $" required>
+								<input class="form-control" type="number" step="1000" id="annual_inc" name="annual_inc" value="{{ form_data.annual_inc }}" placeholder="example : 65,000 $" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
@@ -113,13 +113,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="issue_d">Issue Date</label>
-								<input class="form-control" type="text" id="issue_d" name="issue_d" value="{{ form_data.issue_d }}" placeholder="Jan-2015" required>
+								<input class="form-control" type="text" id="issue_d" name="issue_d" value="{{ form_data.issue_d }}" placeholder="example : Jan-2015" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="purpose">Purpose</label>
-								<input class="form-control" type="text" id="purpose" name="purpose" value="{{ form_data.purpose }}" placeholder="debt_consolidation" required>
+								<input class="form-control" type="text" id="purpose" name="purpose" value="{{ form_data.purpose }}" placeholder="example : debt_consolidation" required>
 							</div>
                         </div>
                     </div>
@@ -128,13 +128,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="dti">Dept To Income (%)</label>
-								<input class="form-control" step="0.1" type="number" id="dti" name="dti" value="{{ form_data.dti }}" placeholder="18.5 %" required>
+								<input class="form-control" step="0.1" type="number" id="dti" name="dti" value="{{ form_data.dti }}" placeholder="example : 18.5 %" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="earliest_cr_line">Earliest Credit Line</label>
-								<input class="form-control" type="text" id="earliest_cr_line" name="earliest_cr_line" value="{{ form_data.earliest_cr_line }}" placeholder="Jun-1990" required>
+								<input class="form-control" type="text" id="earliest_cr_line" name="earliest_cr_line" value="{{ form_data.earliest_cr_line }}" placeholder="example : Jun-1990" required>
 							</div>
                         </div>
                     </div>
@@ -143,13 +143,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="open_acc">Open Account</label>
-								<input class="form-control" type="number" id="open_acc" name="open_acc" value="{{ form_data.open_acc }}" placeholder="12" required>
+								<input class="form-control" type="number" id="open_acc" name="open_acc" value="{{ form_data.open_acc }}" placeholder="example : 12" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="pub_rec">Public Records</label>
-								<input class="form-control" type="number" id="pub_rec" name="pub_rec" value="{{ form_data.pub_rec }}" placeholder="0" required>
+								<input class="form-control" type="number" id="pub_rec" name="pub_rec" value="{{ form_data.pub_rec }}" placeholder="example : 0" required>
 							</div>
                         </div>
                     </div>
@@ -158,13 +158,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="revol_bal">Revol Balance ($)</label>
-								<input class="form-control" type="number" id="revol_bal" name="revol_bal" value="{{ form_data.revol_bal }}" placeholder="15,000 $" required>
+								<input class="form-control" type="number" id="revol_bal" name="revol_bal" value="{{ form_data.revol_bal }}" placeholder="example : 15,000 $" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="revol_util">Revol Utility (%)</label>
-								<input class="form-control" type="number" step="0.1" id="revol_util" name="revol_util" value="{{ form_data.revol_util }}" placeholder="45.5 %" required>
+								<input class="form-control" type="number" step="0.1" id="revol_util" name="revol_util" value="{{ form_data.revol_util }}" placeholder="example : 45.5 %" required>
 							</div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="total_acc">Total Accounts</label>
-								<input class="form-control" type="number" id="total_acc" name="total_acc" value="{{ form_data.total_acc }}" placeholder="25" required>
+								<input class="form-control" type="number" id="total_acc" name="total_acc" value="{{ form_data.total_acc }}" placeholder="example : 25" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
@@ -204,7 +204,7 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="mort_acc">Mortgage Account</label>
-								<input class="form-control" type="number" id="mort_acc" name="mort_acc" value="{{ form_data.mort_acc }}" placeholder="2" required>
+								<input class="form-control" type="number" id="mort_acc" name="mort_acc" value="{{ form_data.mort_acc }}" placeholder="example : 2" required>
 							</div>
                         </div>
                     </div>
@@ -213,13 +213,13 @@
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="pub_rec_bankruptcies">Public Records Bankruptcies</label>
-								<input class="form-control" type="number" id="pub_rec_bankruptcies" name="pub_rec_bankruptcies" value="{{ form_data.pub_rec_bankruptcies }}" placeholder="2" required>
+								<input class="form-control" type="number" id="pub_rec_bankruptcies" name="pub_rec_bankruptcies" value="{{ form_data.pub_rec_bankruptcies }}" placeholder="example : 2" required>
 							</div>
                         </div>
                         <div class="col-md-6 form-col-fix">
                             <div class="form-group">
 								<label class="form-label" for="address">Address</label>
-								<input class="form-control" type="text" id="address" name="address" value="{{ form_data.address }}" placeholder="123 Main St, Anytown, USA 12345" required>
+								<input class="form-control" type="text" id="address" name="address" value="{{ form_data.address }}" placeholder="example : 123 Main St, Anytown, USA 12345" required>
 							</div>
                         </div>
                     </div>

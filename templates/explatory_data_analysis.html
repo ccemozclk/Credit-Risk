@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+	<div class="d-flex align-items-center">
+		<div class="me-auto">
+			<h4 class="page-title">Explatory Data Analysis</h4>
+			<div class="d-inline-block align-items-center">
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url 'predictor:home' %}"><i class="mdi mdi-home-outline"></i></a></li>
+						<li class="breadcrumb-item" aria-current="page">Dashboard</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>
+<section class="content">
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="my-20 text-dark box-title">Loan Status Value Counts</h4>
+                </div>
+                <div class="box-body">
+                    <div id="loanStatusChart" class="h-400"></div> 
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="my-20 text-dark box-title">Loan Amount Distribution</h4>
+                </div>
+                <div class="box-body">
+                    <div id="loanAmntHistChart" class="h-400"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="box box-slided-up">
+                <div class="box-header with-border">
+                    <h4 class="box-title"><strong>Observations & Analytical Comments Related With Loan Status and Loan Amounts</strong></h4>
+                    <ul class="box-controls pull-right">
+                        <li><a class="box-btn-slide" href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="box-body" style="display: none;">
+                    <h5>1. Loan Status Value Counts</h5>
+                    
+                    <p>
+                        Bu çubuk grafiği, veri setindeki kredilerin ne kadarının başarıyla geri ödendiğini ("Fully Paid") ve ne kadarının batık kredi ("Charged Off") olduğunu gösterir. Gördüğümüz gibi, kredilerin büyük bir çoğunluğu başarıyla geri ödenmiştir. Bu, genel olarak kredi portföyünün sağlıklı olduğuna işaret edebilir, ancak "Charged Off" olan kredilerin sayısı yine de önemli bir risk faktörünü temsil etmektedir.
+                    </p>
+                    <br>
+                    <h5>Loan Amount Distribution (Kredi Miktarı Dağılımı)</h5>
+                    <p>
+                        Bu histogram, talep edilen kredi miktarlarının dağılımını görselleştirir. Grafikte belirli miktarlarda (örneğin 10.000$, 15.000$, 20.000$) yığılmalar olduğunu görebiliriz. Bu, müşterilerin genellikle yuvarlak rakamlarla kredi talep etme eğiliminde olduğunu gösterir. Dağılımın genel şekli, hangi kredi miktarı aralıklarında daha fazla talep olduğunu anlamamıza yardımcı olur.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+{{ status_labels|json_script:"status-labels-data" }}
+{{ status_data|json_script:"status-data-data" }}
+{{ loan_amnt_labels|json_script:"loan-amnt-labels-data" }}
+{{ loan_amnt_data|json_script:"loan-amnt-data-data" }}
+{% endblock content %}

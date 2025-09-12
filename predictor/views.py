@@ -5,6 +5,9 @@ import numpy as np
 import re
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 from scipy.stats import gaussian_kde
+from src.components.data_ingestion import DataIngestion
+from src.exception import CustomException
+
 
 def home_view(request):
     return render(request, "index.html")

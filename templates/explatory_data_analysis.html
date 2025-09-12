@@ -151,67 +151,81 @@
             <div class="col-lg-12 col-12">
                 <div class="box box-slided-up">
                     <div class="box-header with-border">
-                        <h4 class="box-title"><strong>Observations & Analytical Comments Related With Loan Status and Loan Amounts</strong></h4>
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Loan Status and Loan Amounts Categories</strong></h4>
                         <ul class="box-controls pull-right">
                             <li><a class="box-btn-slide" href="#"></a></li>
                         </ul>
                     </div>
-                    <div class="box-body" style="display: none;"> <h4>1. Loan Status Value Counts</h4>
+                    <div class="box-body" style="display: none;"> <h4>1. Frequency Distribution of Loan Amount Categories</h4>
                         <ul class="analysis-list">
                             <li>
                                 <strong>Observation:</strong>
                                 <ul>
-                                    <li>In the graph on the left, we can clearly see that the number of people who have fully paid off their loans (Fully Paid) is much higher than the number of people who have defaulted on their loans (Charged Off). The difference appears to be approximately 4 to 1 or 5 to 1 in terms of ratio.</li>
+                                    <li>
+                                        The most common loan amount category in the data set is the 5k-10k range. This is followed by the 10k-15k range.
+                                    </li>
+                                    <li>
+                                        In general, as the loan amount category increases, the total number of loans in that category decreases.
+                                    </li>
+                                    <li>
+                                        In each category, the number of borrowers who have fully paid off their loans (Fully Paid - green) is significantly higher than the number of those who have defaulted (Charged Off - red). 
+                                        This reflects the overall class imbalance we previously identified in the dataset.
+                                    </li>
                                 </ul>
                             </li>
                             <li>
                                 <strong>Analytical Comment:</strong>
                                 <ul>
-                                    <li>This highlights one of the most critical issues of our project from the outset: the <strong>Imbalanced Dataset Problem.</strong></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Meaning:</strong>
-                                <ul>
-                                    <li>Since our model sees the “paid” class much more frequently, it will tend to make biased predictions toward this class. If we do not address this issue, the model we build could achieve an accuracy rate of over 80% by predicting that every loan is “likely to be paid.” However, this model would have no practical value because it would completely fail to identify risky customers, i.e., the Charged Off class, which is our primary objective.</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Note for the Roadmap:</strong>
-                                <ul>
-                                    <li>This imbalance explains why we should focus on metrics such as <strong>Precision, Recall, F1-Score, and AUC</strong> instead of accuracy during the modeling phase, and why we should use resampling techniques like SMOTE or class weights. This graph reminds us that these strategies are not “preferences” but “necessities.”</li>
+                                    <li>
+                                        This graph gives us an idea of the structure of the market by showing where credit demand is concentrated. A large portion of customers use credit between $5,000 and $15,000.
+                                    </li>
+                                    <li>
+                                        However, it is difficult to make a clear interpretation of how the loan amount affects the default risk based on this graph alone. Since the total number of loans in each category varies, comparing the ratios of red and green bars visually may be misleading. This is where the graph on the right comes into play and clarifies the picture.
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
 
-                        <hr class="my-4"> <h4>2. Loan Amount Distribution</h4>
+                        <hr class="my-4"> <h4>2. Default(Charged Off) Rate by Loan Amount Category </h4>
                         <ul class="analysis-list">
                             <li>
                                 <strong>Observation:</strong>
                                 <ul>
-                                    <li>The histogram on the right clearly shows that loan amounts (loan_amnt) do not follow a normal distribution. Instead, there are multiple peaks (multi-modal) in the distribution. There are noticeable clusters around round numbers such as 10,000, 15,000, 20,000, and 35,000.</li>
+                                    <li>
+                                        In this graph, we see a very clear and strong trend: As the loan amount category increases, the average default rate (the average of loan_status_bin) in that category also increases systematically.
+                                    </li>
+                                    <li>
+                                        The lowest default rate is in the 0-5k category, while the highest default rate is in the 30k-40k category. The relationship is nearly linear.
+
+                                    </li>
                                 </ul>
                             </li>
                             <li>
                                 <strong>Analytical Interpretation:</strong>
                                 <ul>
-                                    <li>This distribution provides important insights into customer behavior and the structure of credit products:
-                                        <ul>
-                                            <li><strong>Human Psychology and Demand:</strong> When applying for a loan, people typically prefer round numbers like “10,000” over “9,500.” This is the primary reason behind the peaks in the graph.</li>
-                                        </ul>
+                                    <li>
+                                        This is extremely valuable and actionable insight for our project. We can now clearly state that as the amount of credit drawn increases, so does the risk of non-repayment of that credit.
+                                    </li>
+                                    <li>
+                                        This finding demonstrates that you have successfully transformed the complex, multimodal structure of the loan_amnt histogram into a meaningful and interpretable trend. The categorization process (pd.cut) we performed has revealed a strong and monotonic relationship that the model can easily learn.
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <strong>Non-Homogeneous Customer Groups:</strong>
+                                <strong>Overall Assessment and Strategic Implications: </strong>
                                 <ul>
-                                    <li>These peak points may indicate the presence of non-homogeneous customer groups with different needs in our dataset. For example, a small peak may represent small-need loans, peaks in the 10,000-20,000 range may represent debt consolidation loans, and the largest peak at 35,000 may represent different segments such as larger investments or business loans.</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Feature Engineering Strategy:</strong>
-                                <ul>
-                                    <li>Instead of directly feeding such a complex distribution of a continuous variable into the model, it is a very sensible strategy to categorize it (create loan_amnt_cat using pd.cut). This way, the model can learn these non-linear relationships more easily.</li>
+                                    <li>
+                                        When viewed together, these two graphs tell a powerful story: 
+                                        <ul>
+                                            <li>
+                                                While credit demand is most concentrated in low-to-medium amounts, the real risk lies in higher credit amounts.
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        This feature engineering step we took (creating loan_amnt_cat) is not just a data cleaning or transformation process, but also the creation of a new feature with high predictive power that you can directly feed into your model. 
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -229,4 +243,10 @@
 {{ loan_amnt_labels|json_script:"loan-amnt-labels-data" }}
 {{ loan_amnt_data|json_script:"loan-amnt-data-data" }}
 {{ loan_amnt_kde_data|json_script:"loan-amnt-kde-data" }}
+
+{{ cat_labels|json_script:"cat-labels-data" }}
+{{ fully_paid_data|json_script:"fully-paid-data" }}
+{{ charged_off_data|json_script:"charged-off-data" }}
+{{ mean_labels|json_script:"mean-labels-data" }}
+{{ mean_data|json_script:"mean-data-data" }}
 {% endblock content %}

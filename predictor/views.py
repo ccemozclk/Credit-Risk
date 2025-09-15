@@ -49,6 +49,19 @@ def eda_view(request):
     grouped_barplot = df.groupby('loan_amnt_cat')['loan_status_bin'].mean().reset_index()
     mean_labels = grouped_barplot['loan_amnt_cat'].tolist()
     mean_data = grouped_barplot['loan_status_bin'].tolist()
+
+    term_counts = df['term'].value_counts()
+    term_labels = term_counts.index.tolist()
+    term_data = term_counts.values.tolist()
+
+    term_grouped_counts = df.groupby(['term', 'loan_status']).size().unstack(fill_value=0)
+    term_grouped_labels = term_grouped_counts.index.tolist()
+    term_grouped_fully_paid = term_grouped_counts['Fully Paid'].values.tolist()
+    term_grouped_charged_off = term_grouped_counts['Charged Off'].values.tolist()
+
+    term_mean = df.groupby('term')['loan_status_bin'].mean()
+    term_mean_labels = term_mean.index.tolist()
+    term_mean_data = term_mean.values.tolist()
     context = {
         'status_labels': status_labels,
         'status_data': status_data,
@@ -61,6 +74,14 @@ def eda_view(request):
         'charged_off_data': charged_off_data,
         'mean_labels': mean_labels,
         'mean_data': mean_data,
+
+        'term_labels': term_labels,
+        'term_data': term_data,
+        'term_grouped_labels': term_grouped_labels,
+        'term_grouped_fully_paid': term_grouped_fully_paid,
+        'term_grouped_charged_off': term_grouped_charged_off,
+        'term_mean_labels': term_mean_labels,
+        'term_mean_data': term_mean_data,
     }
     
     return render(request, 'explatory_data_analysis.html', context)

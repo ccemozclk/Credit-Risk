@@ -120,8 +120,9 @@
             </div>
         </div>
     </div>
-    <hr class="my-4"> 
+    
     <!-- 2nd Line -->
+    <hr class="my-4"> 
     <div class="all-charts-container">
         <div class="row">
             <div class="col-lg-6 col-12">
@@ -211,22 +212,170 @@
                                     </li>
                                 </ul>
                             </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>Overall Assessment and Strategic Implications:</h4>
+                        <ul class="analysis-list">
                             <li>
-                                <strong>Overall Assessment and Strategic Implications: </strong>
+                                When viewed together, these two graphs tell a powerful story:
                                 <ul>
                                     <li>
-                                        When viewed together, these two graphs tell a powerful story: 
-                                        <ul>
-                                            <li>
-                                                While credit demand is most concentrated in low-to-medium amounts, the real risk lies in higher credit amounts.
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        This feature engineering step we took (creating loan_amnt_cat) is not just a data cleaning or transformation process, but also the creation of a new feature with high predictive power that you can directly feed into your model. 
+                                        While credit demand is most concentrated in low-to-medium amounts, the real risk lies in higher credit amounts.
                                     </li>
                                 </ul>
+                            </li>
+                            <li>
+                                This feature engineering step we took (creating loan_amnt_cat) is not just a data cleaning or transformation process, but also the creation of a new feature with high predictive power that you can directly feed into your model. 
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 3rd Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Term Categories Class Distributions</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Term Class Dist. By Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Default Rate by Loan Term Category</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termMeanBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Loan Term Categories</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    <div class="box-body" style="display: none;"> 
+                        <h4>1. Loan Term Distribution</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>
+                                        We see that the vast majority of credits in the data set have a maturity of 36 months (3 years). Credits with a maturity of 60 months (5 years) are in the minority. The ratio appears to be approximately 3 to 1.
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>
+                                        This situation indicates that shorter-term borrowing is more common in the credit market. This may be due to both borrowers' desire to pay off their debts more quickly and lenders' tendency to approve shorter-term loans more frequently, as they are considered less risky.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>2. Term Distribution by Loan Status </h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>
+                                        We see that the number of fully paid loans (green) exceeds the number of charged-off loans (red) for both maturities. However, the ratio of the red bar (charge-offs) to its green bar for the 60-month maturity is noticeably larger than the ratio of the red bar to its green bar for the 36-month maturity.
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation:</strong>
+                                <ul>
+                                    <li>
+                                        This graph provides the first important clue that risk differs between the two groups. We sense that the default rate may be higher for 60-month loans. However, to see these rates clearly, we need the third graph.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>2. Default(Charged-Off) Rate by Loan Term </h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>
+                                        This graph clearly and strongly confirms our suspicion in the previous graph. The default rate for 60-month loans is dramatically higher than the default rate for 36-month loans. According to the graph, while the default rate for 36-month loans is approximately 15-16%, this rate exceeds 35% for 60-month loans.
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation:</strong>
+                                <ul>
+                                    <li>
+                                        This is a very important finding for our project. We can clearly state that as the loan term increases, the risk of default also increases exponentially.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>Possible Reasons </h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Longer Exposure to Risk: </strong>
+                                <ul>
+                                    <li>
+                                        Over a 5-year period, the likelihood of a borrower losing their job, experiencing an unexpected health issue, or encountering other financial difficulties is higher than over a 3-year period.
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Riskier Customer Segment: </strong>
+                                <ul>
+                                    <li>
+                                        Longer terms, such as 60 months, are typically offered to customers with larger loan amounts (which we have already identified as riskier) or lower monthly payment capacity. Therefore, the 60-month group may have accumulated a riskier customer profile from the outset.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>Overall Assessment and Strategic Conclusions</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                The term variable has proven to be an extremely powerful predictor in determining the risk of a loan, despite containing only two categories. During the modeling phase, a loan term of 60 months will be one of the most important signals for the model to flag that loan as “risky.”
+                            </li>
+                            <li>
+                                With this simple yet effective analysis, we have placed another important building block in the foundation of our model. Great job!
                             </li>
                         </ul>
 
@@ -249,4 +398,13 @@
 {{ charged_off_data|json_script:"charged-off-data" }}
 {{ mean_labels|json_script:"mean-labels-data" }}
 {{ mean_data|json_script:"mean-data-data" }}
+
+
+{{ term_labels|json_script:"term-labels-data" }}
+{{ term_data|json_script:"term-data-data" }}
+{{ term_grouped_labels|json_script:"term-grouped-labels-data" }}
+{{ term_grouped_fully_paid|json_script:"term-grouped-fully-paid-data" }}
+{{ term_grouped_charged_off|json_script:"term-grouped-charged-off-data" }}
+{{ term_mean_labels|json_script:"term-mean-labels-data" }}
+{{ term_mean_data|json_script:"term-mean-data-data" }}
 {% endblock content %}

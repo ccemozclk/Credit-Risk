@@ -49,6 +49,11 @@ $(document).ready(function() {
         const termGroupedChargedOff = JSON.parse(document.getElementById('term-grouped-charged-off-data').textContent);
         const termMeanLabels = JSON.parse(document.getElementById('term-mean-labels-data').textContent);
         const termMeanData = JSON.parse(document.getElementById('term-mean-data-data').textContent);
+
+        const ltoiBoxPlotData = JSON.parse(document.getElementById('ltoi-boxplot-data').textContent);
+        const incomeBoxPlotData = JSON.parse(document.getElementById('income-boxplot-data').textContent);
+
+
         
         
         function getColorForValue(value, min, max) {
@@ -210,6 +215,36 @@ $(document).ready(function() {
                     };
         var chart7 = new ApexCharts(document.querySelector("#termMeanBarChart"), options7);
         chart7.render();
+
+        var options8 = {
+                        series: [{
+                                    name: 'Loan to Income Ratio',
+                                    type: 'boxPlot',
+                                    data: ltoiBoxPlotData
+                                }],
+                        chart: { type: 'boxPlot', height: 400, foreColor: '#aeb4c6' },
+                        colors: ['#009B77', '#BC243C'],
+                        title: { text: 'Loan to Income Ratio by Loan Status', align: 'left' },
+                        xaxis: { title: { text: 'Loan Status' } },
+                        yaxis: { tooltip: { enabled: true } },
+                        tooltip: { theme: 'dark' },
+                        grid: { borderColor: '#555' }
+                    };
+        var chart8 = new ApexCharts(document.querySelector("#loanToIncomeBoxPlot"), options8);
+        chart8.render();
+
+        var options9 = {
+                series: incomeBoxPlotData, // Veriyi doğrudan view'dan gelen formatta kullanıyoruz
+                chart: { type: 'boxPlot', height: 400, foreColor: '#aeb4c6' },
+                colors: ['#009B77', '#BC243C'],
+                title: { text: 'Loan Amount by Income Category and Status', align: 'left' },
+                xaxis: { title: { text: 'Income Category' } },
+                yaxis: { title: { text: 'Loan Amount ($)' }, tooltip: { enabled: true } },
+                tooltip: { theme: 'dark' },
+                grid: { borderColor: '#555' }
+            };
+            var chart9 = new ApexCharts(document.querySelector("#incomeCatBoxPlot"), options9);
+            chart9.render();
 
     }
         

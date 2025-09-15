@@ -384,6 +384,1556 @@
             </div>
         </div>
     </div>
+
+    <!-- 4th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan To Income Value Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="loanToIncomeBoxPlot" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Annual Income Category Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="incomeCatBoxPlot" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Annual Income And Loan To Income Value</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    <div class="box-body" style="display: none;"> 
+                        <h4>1. Loan To Income Ratio Distribution</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>
+                                        This box plot compares the distribution of the loan_to_income feature you created by loan status. We see that the box for the defaulted (Charged Off - red) group is significantly higher than the box for the fully paid (Fully Paid - green) group. The median, quartiles, and overall distribution indicate higher loan_to_income ratios for the defaulted group.
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>
+                                        This is one of the clearest and strongest findings in the project.
+                                    </li>
+
+                                    <li>
+                                        The extent to which an individual has borrowed relative to their annual income is one of the most significant factors directly influencing their likelihood of default. This ratio directly measures the individual's debt burden or financial stress. The higher the ratio, the less flexibility remains in the individual's budget to handle unexpected circumstances (job loss, health issues, etc.).
+                                    </li>
+
+                                    <li>
+                                        The loan_to_income variable we created is a much stronger predictor than loan_amnt or annual_inc alone. This feature will play a key role in our model's classification of an individual as “risky.”
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <h4>2. Annual Income Category Distribution by Loan Status </h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>
+                                        On the X-axis, from left to right, as the income category increases (from 0-40k to 160k+), both the repaid (green) and Charged off (red) loans are shifting upward along the loan_amnt (loan amount) axis.This is an expected and logical situation. It shows that as people's annual income increases, they tend to take out higher amounts of credit, and financial institutions also grant them higher limits.
+                                    </li>
+
+                                    <li>
+                                        Within each income category, the median loan_amnt value of Charged off loans (red) is higher than the median loan_amnt value of fully repaid loans (green).This indicates that among people in the same income group, those who borrow larger amounts of credit are more likely to default. This may be an indication that individuals are stretching themselves financially beyond their means. The amount of credit borrowed is a risk factor not only in relation to income but also in relation to an individual's borrowing capacity.
+                                    </li>
+                                    <li>
+                                        Especially in middle-income groups such as 40k-80k and 80k-120k, the interquartile range (IQR) of defaulted loans is slightly wider than that of repaid loans. This indicates that there is greater diversity in the loan amounts among defaulters. Additionally, there are a large number of outliers in all categories.Outliers, especially at high loan amounts, can affect the performance of our model. However, they also indicate special cases where individuals have taken out loans significantly higher than expected for their income level and are either able to repay them or unable to do so.
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation:</strong>
+                                <ul>
+                                    <li>
+                                        This graph confirms and visualizes the story told by the graph on the left from a different angle. While the graph on the left tells us that the “ratio” is important, this graph on the right shows us why this ratio is important. Whether a person is in the 40k-80k income bracket or the 160k+ income bracket, if they take out a relatively higher loan compared to others at their income level, the risk of default increases.
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4"> 
+                        <ul class="analysis-list">
+                            <li>
+                                In summary, this graph does not simply tell us that “people with low incomes default more often.” A deeper analysis reveals that “regardless of income level, those who borrow relatively more credit for that level are at greater risk of default.”
+                            </li>
+                            <li>
+                                This is evidence of how important the interaction between the annual_inc and loan_amnt variables—rather than each variable alone—might be in the model we are building (for example, the loan_to_income ratio we created).
+                            </li>
+                        </ul>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Application Types Categories Class Distributions</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Application Types Categories Dist. By Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Default Rate by Application Types Categories</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termMeanBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Application Types Categories</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Individual Analysis of Graphs</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Left and Middle Graphs (Frequency Distribution):</strong>
+                                <ul>
+                                    <li>
+                                        <strong>Observation:</strong>
+                                        <ul>
+                                            <li>These two graphs tell us one thing very clearly: the overwhelming majority of loans in the data set are from INDIVIDUAL applications. JOINT and DIRECT_PAY applications are so few that they are barely visible in the graph.</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>Analytical Comment:</strong>
+                                        <ul>
+                                            <li>This provides a very important context for our analysis. Any conclusions we draw about the JOINT and DIRECT_PAY categories will be based on a very small sample group.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Right-hand graph (Charged-off Rates):</strong>
+                                <ul>
+                                    <li>
+                                        <strong>Observation:</strong>
+                                        <ul>
+                                            <li>At first glance, this graph shows that the charged-off rates for JOINT and DIRECT_PAY applications are lower than those for INDIVIDUAL applications.</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>Analytical Comment:</strong>
+                                        <ul>
+                                            <li>This may make sense theoretically. For example, JOINT applications may be expected to have lower risk because two people are involved in terms of income and responsibility. However, before reaching this conclusion, we should remember our observation in the first graph.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Overall Assessment and Strategic Conclusions</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                When we combine these three graphs, the most important conclusion is as follows:
+                                <ul>
+                                    <li>The lower default rates in the JOINT and DIRECT_PAY categories may not be statistically significant and may be misleading due to the extremely small number of samples in these groups.</li>
+                                    <li>Why is this important? An average calculated with very few data points (in this case, the default rate) can vary greatly depending on a few lucky or unlucky outcomes. For example, if there are only 10 applications in the DIRECT_PAY category and only 1 of them defaults, the rate will be 10%. But if, by chance, 2 defaulted, the rate would suddenly jump to 20%. Therefore, relying on rates derived from such small groups is risky.</li>
+                                    <li>Implications for the Model: The application_type variable may not be very useful for the model in its current form. If a feature contains nearly all the data in one of its categories (such as INDIVIDUAL), it is very difficult for the model to learn a meaningful pattern from the other categories. During the modeling phase, we might consider combining these rare categories (JOINT and DIRECT_PAY) into a single “Other” category or removing this variable from the model entirely.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Employee Length Class Distributions</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Emp. Length Class Dist. By Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Employee Length</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termMeanBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Employee Lengths</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Work Experience Distribution (Left and Middle Graphs)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The most striking point in both graphs is that those with 10+ years of experience constitute the largest group in the data set. Other experience periods are lower and contain similar numbers of debtors.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>A significant portion of borrowers appear to have a highly experienced and stable career profile. Looking at the middle graph, we see that the distribution of paid and defaulted loans generally follows the overall distribution across all experience levels. However, it is quite difficult to determine how risk (default rate) changes with experience from this graph.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Charged-Off Rate by Work Experience (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>This graph presents us with the most interesting and unexpected result. Unlike our previous analyses (term, loan_amnt, etc.), there is no clear upward or downward trend between work experience and default rate. Default rates are very close to each other for all experience levels and fluctuate around 20%.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This is a very important discovery for our project. Intuitively, we might have expected that people who have been working longer would be more reliable borrowers. However, the data does not support this hypothesis.</li>
+                                    <li>When it comes to credit repayment behavior, we see that whether a person has been working for 2 years or 8 years does not make a significant difference. Default risk is nearly the same across all experience levels.</li>
+                                    <li>Perhaps a person's financial stability is already captured by other variables such as grade, annual_inc (annual income), and home_ownership (homeownership) rather than emp_length. When these variables are accounted for, work experience may not provide additional information.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <p><strong>The main conclusion we draw from this analysis is that work experience (emp_length) is not a strong indicator for predicting credit default risk.</strong></p>
+                        <p>This is one of the best aspects of the EDA process; we discover not only which features are important, but also which ones are not as important as expected.</p>
+                        <p><strong>Implications for the Model:</strong> The predictive power of the emp_length variable in our model is likely to be low. During the feature selection phase, we might even consider removing this variable from the model to simplify it.</p>
+                        <p><em>Sometimes discovering that a feature is “unimportant” is just as valuable as discovering that it is important. Another great analysis completed!</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Interest Rate Categories Class Distributions</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged Off Rate By Interest Rate Cats.</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Interest Rate</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Frequency Distribution of Interest Rate Categories (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>A large portion of the loans in the data set are concentrated in the 10-15% interest rate range. The 5-10% and 15-25% ranges contain fewer loans, while loans with very high interest rates, such as 25-35%, are quite rare.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This distribution reflects the general structure of the credit market. Most loans are granted to customers with an average risk profile at standard interest rates. Very low interest rates are only offered to the most reliable customers, while very high rates are only offered to customers considered the most risky. This graph shows the concentration of credit in the market rather than the risk itself.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Charged-Off Rate by Interest Rate Category (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>This graph shows a very clear, strong, and gradual upward trend. As the interest rate category increases, the default rate also increases dramatically.</li>
+                                    <li>While the default risk for loans in the 5%-10% range is very low (&lt;10%), in the 15%-25% range, this rate rises above 35%, and in the 25%-35% range, it rises above 50%.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This is one of the clearest and strongest findings in our project. The interest rate is a direct indicator of a loan's default risk.</li>
+                                    <li>Why? This result is actually highly intuitive. Lending institutions assess a customer's risk (by considering factors such as credit score, income status, and debt levels) and apply a higher interest rate to customers they perceive as riskier to compensate for this risk. Therefore, a high interest rate is a signal that the lending institution has already labeled that customer as “risky” from the outset. This graph confirms that the institution's own risk pricing model is working.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>This analysis has proven that the int_rate variable is one of the most important predictive features for our model. A high interest rate is essentially an “alarm bell” for default.</strong></p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Installment Distribution By Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Installment Amount Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Installment Amounts</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Box Plot Analysis (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>In the box plot showing the distribution of installments according to loan_status, we see that the box for the Charged Off group is positioned higher than that for the Fully Paid group. In particular, the median (the line in the middle of the box) and the third quartile (the upper line of the box) values are higher in the Charged Off group.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This observation implies that loans with higher monthly installment amounts have a higher risk of default. This is highly logical. The higher the monthly installment amount, the more strained the borrower's monthly budget becomes, and the greater the risk of being unable to make payments in the face of an unexpected financial shock (e.g., an unexpected expense or a small decrease in income).</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Histogram Analysis (Graph on the Right)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The histogram shows the distribution of monthly installment amounts for both the Fully Paid and Charged Off groups in more detail.</li>
+                                    <li>The overall distribution is right-skewed, meaning that most loans have installment amounts concentrated at lower levels (&lt;$500), but there are also a small number of loans with very high installment amounts.</li>
+                                    <li>The most important point is that the distribution curve for the Charged Off group (orange/red) is significantly shifted to the right compared to the distribution curve for the Fully Paid group (blue/green).</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This histogram not only confirms the finding in the box plot but also reinforces it. The rightward shift in the distribution confirms that defaulted loans generally have higher installment amounts at every level. This indicates a clear distinction between the two groups and demonstrates that the installment amount is a valuable feature for risk estimation.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>The clear conclusion we can draw from these two graphs is that as the monthly payment burden increases, so does the risk of default.</strong></p>
+                        <p>The installment variable is not actually a standalone feature; it is a function of the loan_amnt (loan amount), int_rate (interest rate), and term (maturity) variables. In our previous analyses, we found that all three of these variables have strong relationships with default risk:</p>
+                        
+                        <ul class="analysis-list">
+                            <li><em>High loan_amnt → High Risk</em></li>
+                            <li><em>High int_rate → High Risk</em></li>
+                            <li><em>Long term (60 months) → High Risk</em></li>
+                        </ul>
+                        
+                        <p>The installment variable is a very powerful predictive feature because it summarizes the combination of these three risk factors and their direct impact on the borrower in a single number. Our model will gain important insights into risk by looking at the monthly installment amount of a loan. Another great analysis!</p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Status Frq. Distribution by Grade</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Status Frq. Distribution by Sub-Grade</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Status Frq. Distribution by Home Ownership</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Loan Status Frq. Distribution by Verification Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Grade/Sub-Grade/Home Ownership/Ver.Status</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Loan Status Frequency Distribution by Grade</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The vast majority of loans in the data set are concentrated in grades B and C.</li>
+                                    <li>As the credit grade deteriorates from ‘A’ to ‘G’, the height of the blue bars (Fully Paid) decreases, while the height of the orange bars (Charged Off) increases up to a certain point and then decreases. However, the most important point is that the ratio of the orange bar to the blue bar increases steadily from A to G.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This graph clearly shows that the credit rating system (grade) is working as expected. Grade is a very powerful indicator of a customer's risk of default.</li>
+                                    <li>Customers with better grades such as A and B have a much higher probability of repaying their loans, while customers with grades such as F and G have a dramatically higher risk of default.</li>
+                                    <li>This is one of the clearest signs that the grade variable will have a very high predictive power during the modeling phase.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Loan Status Frequency Distribution by Sub-Grade</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>This graph is a more detailed version of the grade graph. We see that loans are mostly concentrated in sub-grades such as B3, B4, C1, and C2.</li>
+                                    <li>The trend in the grade graph continues here in a smoother and more pronounced manner. As we move from A1 to G5, we observe that the default (orange) rate increases almost gradually.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>sub_grade provides a more granular (detailed) risk segmentation than grade. For example, it shows a clear difference in risk profiles between a C1 customer and a C5 customer.</li>
+                                    <li>This suggests that the sub_grade variable may be even more useful than grade for the model to make more accurate predictions. During the modeling phase, we can decide which of these two variables to use or how to integrate both.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>3. Loan Status Distribution by Home Ownership</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The vast majority of borrowers are either homeowners (MORTGAGE) or renters (RENT). A very small portion are owners of their own homes (OWN). There is almost no data in categories such as ANY and OTHER.</li>
+                                    <li>The default rate for renters (RENT) (the ratio of the orange bar to the blue bar) is noticeably higher than that of homeowners (MORTGAGE). The situation for those who own their own homes (OWN) appears to fall between these two.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>Homeownership status provides an important clue about financial stability. Since owning a home with a mortgage typically indicates regular payment discipline and a more stable financial situation, it makes sense that these individuals have a lower default risk.</li>
+                                    <li>Renters may have higher risks because they may have less financial security.</li>
+                                    <li>The home_ownership variable will also be a meaningful feature for the model.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>4. Loan Status Frequency Distribution by Verification Status</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The data set is fairly evenly distributed across three categories: Verified, Source Verified, and Not Verified.</li>
+                                    <li>Interestingly, the default rate for those with verified income (Verified) appears to be higher than that for those with unverified income (Not Verified). Source Verified has a risk profile between the two.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>At first glance, this may seem counterintuitive. It raises the question, “Why would someone with verified income default more often?” One possible explanation could be selection bias. The lending institution may subject the incomes of applicants it already perceives as riskier or who show inconsistencies in their application information to stricter verification. In other words, the Verified group may already consist of a riskier population from the outset.</li>
+                                    <li>This is a great example of how looking at a single variable can be misleading and how important the interaction between variables can be.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <p><em>Now, to validate the insights we have gained here, we will examine our categorical variables based on the average of the “loan_status_bin” variable we created earlier and support our assumptions.</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Grade</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Sub-Grade</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Home Ownership</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Verification Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Grade/Sub-Grade/Home Ownership/Ver.Status Charged-Off Rates</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Charged-Off Rate by Loan Status Grade</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Confirmed Conclusion:</strong> In the previous graph, we observed that the default rate increased as the grade deteriorated. This graph confirms this observation numerically and shows how sharp the increase is.
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>While the default rate for an A grade is around 5%, for a G grade it exceeds 40%. This is a monotonic relationship showing that risk increases exponentially with grade (as one variable increases, the other increases continuously).</li>
+                                    <li>We can clearly see how powerful a discriminating feature grade is on its own. This is a strong candidate to be one of the most important features of our model.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Charged-Off Rate by Sub-Grade</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Confirmed Conclusion:</strong> This graph perfectly supports our hypothesis that sub_grade provides a more sensitive risk differentiation than grade.
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>The increase in the default rate rises almost seamlessly from A1 to G5. This proves that sub_grade captures credit risk at a much more granular level.</li>
+                                    <li>For example, knowing whether a customer is C1 or C5, rather than just ‘C,’ provides our model with much more information for predicting default risk. This graph suggests that sub_grade could be a stronger feature than grade.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>3. Charged-Off Rate by Home Ownership Status</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Confirmed Conclusion:</strong> This clarifies our conclusion that MORTGAGE holders have the lowest risk and RENT (tenants) have the highest risk.
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>The graph quantifies the risk difference between these groups. The default rate for MORTGAGE holders is approximately 15%, while that for tenants is around 22%. This indicates that the difference between the two is statistically significant.</li>
+                                    <li>Important Note: Although the rates for the OTHER, NONE, and ANY categories appear very high, we know from the previous frequency graph that there are very few people in these categories. Therefore, these high rates may be due to small sample sizes and could be misleading. It is more reliable to focus on MORTGAGE, RENT, and OWN in our analyses.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>4. Charged-Off Rate by Verification Status</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Verified Conclusion:</strong> Our hypothesis of “selection bias”—that those with verified income have the highest default rate—is clearly proven here.
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This graph presents one of the most interesting and counterintuitive findings. Unverified (~15% rate) has the lowest risk, while Verified (~22% rate) has the highest risk.</li>
+                                    <li>This strongly confirms that the credit institution is inclined to verify profiles it deems risky. When using this variable in the model, we should keep in mind that the “verified” factor may actually be a proxy for an underlying higher risk profile.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Credit History Length Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Credit History Length Histogram Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Credit History Length</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observations:</strong>
+                                <ul>
+                                    <li>In both graphs, we see that the distribution of credit history length for those who paid off their credit in full (Fully Paid) shifts slightly to the right compared to those who defaulted (Charged Off). This indicates that successful borrowers generally tend to have slightly longer credit histories.</li>
+                                    <li>The median line (the line inside the box) in the box plot is higher for the Fully Paid group than for the Charged Off group.</li>
+                                    <li>However, there is a significant overlap between the distributions of the two groups. This indicates that it is challenging to predict whether an individual will default based solely on the length of their credit history.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Statistical Analysis:</strong>
+                                <ul>
+                                    <li>Numerical data confirms and clarifies our observations in the visuals.</li>
+                                    <li>Mean: The average credit history of those who paid their loans is 15.85 years, while the average for those who defaulted is 15.36 years.</li>
+                                    <li>Median (50%): The median value for those who paid off their loans is 14.49 years, while for those who defaulted, it is 13.92 years.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Interpretation and Conclusion:</strong>
+                                <ul>
+                                    <li>The most important insight we gain from this analysis is that a longer credit history is associated with a lower risk of default, but this relationship is not very strong.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <p><strong>Why is it logical?</strong> A long credit history can indicate that a person has been part of the financial system for a longer period of time, is more experienced in using credit products, and potentially has a more stable financial history. Therefore, it is reasonable to expect that these individuals are slightly more likely to repay their debts.</p>
+                        <p><strong>What Does It Mean for the Model?</strong> While the credit_history_length variable may not be a very strong predictor on its own, it is a useful feature that will certainly contribute to our model. It will likely become more meaningful when combined with other variables (e.g., age, income, credit score).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Average Loan Amount By Purpose</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged Off Rate By Purpose</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Purpose</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Average Loan Amounts (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>This graph shows how much credit was taken out for what purposes. Loans for small businesses, houses, credit card debt restructuring, and debt consolidation have the highest average amounts. In contrast, loans for purposes such as educational, moving, and vacation have lower amounts.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>These results are quite intuitive. Major investments such as starting a business or buying a home naturally require more capital than expenses related to a vacation or moving. This graph gives us an idea of the financial scale of each purpose.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Charged-Off Rates (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>This graph shows the risk profile of each purpose. small_business has by far the highest default rate. It is followed by purposes such as educational, renewable_energy, and moving. On the other hand, credit_card (credit card), wedding (wedding), and home_improvement (home improvement) stand out as the lowest-risk categories.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This graph shows how critical the primary purpose is when assessing credit risk. The uncertainties associated with starting a business make small business loans the riskiest category.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>3. Comparative Analysis of Two Graphs</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                The true power of these two graphs becomes apparent when we interpret them together:
+                                <ul>
+                                    <li>
+                                        <strong>The ‘small_business’ Dilemma: High Amount, Highest Risk</strong>
+                                        <ul>
+                                            <li>small_business has both the highest average loan amount and the highest default rate. This translates to “high risk, high amount” for the lending institution and is potentially the most dangerous type of loan.</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>The Two Faces of Debt Restructuring: ‘credit_card’ vs. 'debt_consolidation'</strong>
+                                        <ul>
+                                            <li>This is one of the most interesting findings. Both purposes aim to consolidate existing debts under one roof, and both involve borrowing large amounts of credit (left graph).</li>
+                                            <li>However, when we look at the risk profiles (right graph), restructuring credit card debt is one of the lowest-risk purposes, while general debt consolidation is a medium-to-high-risk purpose.</li>
+                                            <li>
+                                                <strong>Conclusion:</strong>
+                                                <ul>
+                                                    <li>This suggests that restructuring credit card debt is typically done by a more reliable customer profile with higher financial discipline who is trying to manage their debt. General “debt consolidation,” on the other hand, may encompass a more complex and financially distressed, and therefore riskier, group.</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>Low Amount Does Not Always Mean Low Risk</strong>
+                                        <ul>
+                                            <li>Loans for educational and moving purposes, despite having low average amounts, rank high on the default rate list.</li>
+                                            <li>
+                                                <strong>Conclusion:</strong>
+                                                <ul>
+                                                    <li>This shows that credit risk is not only related to the amount of money borrowed, but also to the life circumstances brought about by the actual purpose. Situations such as education or moving are often associated with periods of high financial uncertainty (e.g., a graduate who has not yet found a job).</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 13th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Dept-To-Income(dti) Rate by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Dept-To-Income(dti) Distribution by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Depth To Income (dti)</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Box Plot Analysis (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>In the box plot showing the distribution of DTI (debt-to-income ratio) by loan_status, we see that the box for the Charged Off group is significantly higher than that for the Fully Paid group. The entire distribution, including the median, lower quartile, and upper quartile, indicates higher DTI ratios for those in default.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This clearly shows a positive relationship between DTI and default risk. In other words, the higher a person's current debt-to-income ratio, the greater the likelihood that they will be unable to repay their new loan. This makes perfect sense, as a high DTI indicates that the individual has less financial flexibility and that their monthly budget is already strained. In such a situation, even the slightest financial shock could leave the borrower unable to repay their loan.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Histogram Analysis (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The histogram confirms this relationship in more detail. We see that the distribution curve for the Charged Off group (usually orange/red according to the color palette) has shifted noticeably to the right compared to the curve for the Fully Paid group. The peak of the Charged Off group occurs at a higher dti value than the peak of the Fully Paid group.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This rightward shift in the distribution reinforces the finding that defaulted borrowers generally have higher debt-to-income ratios. This graph visually demonstrates how effective DTI is as a feature in distinguishing between the two classes.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Overall Assessment and Strategic Implications</strong>
+                                <ul>
+                                    <li><em>The conclusion we draw from these two graphs is clear: DTI (Debt-to-Income Ratio) is a strong predictor of credit risk and is of critical importance in determining credit risk.</em></li>
+                                    <li>Implications for the Model: The machine learning model we will build will learn to associate higher DTI values with higher default probabilities. This feature is expected to rank high in the model's feature importance ranking.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Open Account Category Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Distribution by Open Account Category</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Open Account Values</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Frequency Distribution of Open Account Number Categories (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The vast majority of debtors are concentrated in the 0-10 and 10-15 open account ranges. As the number of open accounts increases, the number of people in that category decreases significantly. Those with more than 30 open accounts (30+) constitute a very small group.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This graph shows that most debtors have a manageable number of credit accounts. Having a very high number of accounts is a rare occurrence. This distribution information provides context when interpreting the risk graph on the right.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Default Rate by Number of Open Accounts (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The relationship in this graph is slightly different from what we have seen so far. There is no clear linear increase or decrease.</li>
+                                    <li>The charged-off rates in the 0-10 and 10-15 account ranges are at their lowest levels and very close to each other.</li>
+                                    <li>When the number of accounts reaches the 15-20 and 20-30 ranges, a slight increase in the charged-off rate is observed.</li>
+                                    <li>The most significant jump occurs in the 30+ category; this group has the highest charged-off rate.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>
+                                        This indicates that risk has a non-linear relationship.
+                                        <ul>
+                                            <li>Having a small or moderate number of credit accounts (0-15) does not make a significant difference in terms of risk. However, when the number of open accounts a person holds reaches an excessive level (30+), this may indicate potential financial instability or excessive “credit-seeking” behavior. This significantly increases the risk of default.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Total Account Category Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged-Off Distribution by Total Account Category</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Total Account Values</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Frequency Distribution of Total Account Number Categories (Left Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The vast majority of debtors are concentrated in the 15-25 and 25-35 total accounts in their credit history. The data is concentrated in these middle categories. Those with very few accounts (‘0-15’) and those with very many accounts (‘45-55’, ‘55+’) are rarer.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This distribution indicates that our borrower profile typically does not have either very new or excessively extensive credit histories. The majority consists of individuals with reasonable financial histories. This information provides a foundation for interpreting the risk graph on the right.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Default Rate by Total Number of Accounts (Right Graph)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The relationship in this graph is quite interesting and exhibits a non-linear structure.</li>
+                                    <li>The highest default rate is seen in the ‘0-15’ group, which has the least credit experience.</li>
+                                    <li>As the total number of accounts increases (when moving to the ‘15-25’ group), the risk decreases significantly.</li>
+                                    <li>The default rate remains quite stable and low across the ‘15-25’, ‘25-35’, ‘35-45’, and ‘45-55’ categories.</li>
+                                    <li>In the most experienced group, the ‘55+’ category, a slight increase in the default rate is observed.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Commentary:</strong>
+                                <ul>
+                                    <li>
+                                        This graph tells us a multi-layered story:
+                                        <ul>
+                                            <li>
+                                                <strong>Inexperience Is the Biggest Risk:</strong>
+                                                <ul>
+                                                    <li>The group with the highest credit default risk is those with limited credit history. This makes perfect sense; because these borrowers are either younger or have had less interaction with the financial system, which makes their debt management experience and financial resilience more uncertain.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <strong>Maturity and Stability Phase:</strong>
+                                                <ul>
+                                                    <li>Once a borrower reaches a certain level of experience (more than 15 accounts in their history), their risk profile improves significantly and becomes more stable. Having more accounts beyond this point does not further reduce the risk.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <strong>Excessive Experience?:</strong>
+                                                <ul>
+                                                    <li>The slight increase in the ‘55+’ group may be noise due to the small sample size in this group or may indicate a slight increase in risk as it represents an older, now fixed-income (retired, etc.) population. However, the main conclusion is that risk is most concentrated in the inexperienced group.</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>The clear conclusion we draw from this analysis is that there is no linear relationship between the total number of credit accounts and the risk of default. The biggest risk factor is having an insufficient credit history.</strong></p>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 16th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Open Acc./Total Acc. Rate Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Open Acc./Total Acc. Rate Histogram Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Open Acc./Total Acc. Rate</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Box Plot (Left Side):</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The box for the defaulted (Charged Off) group is clearly and distinctly positioned higher than that of the group that paid off their credit (Fully Paid).</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This further confirms the accuracy of our hypothesis. More importantly, however, the distinction here is even sharper compared to our initial analysis using raw data. Cleaning out the outliers has allowed the true difference between the two groups to emerge more clearly. According to the cleaned data, the high open_total_acc_rate appears to be an even stronger signal for Charged Off.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Histogram (Right Side):</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>The histogram tells the same story. The distribution curve for the Charged Off group has shifted more noticeably to the right than the distribution curve for the Fully Paid group. The distance between the peaks of the two groups has widened further.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Comment:</strong>
+                                <ul>
+                                    <li>This visual confirms the ability of the open_total_acc_rate feature to distinguish borrowers with high Charged Off risk. By reducing the noise in the data, the underlying “signal” is now much brighter and clearer.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 17th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Revolving Balance Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Revolving Balance Histogram Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Revolving Utilization Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Revolving Utilization Histogram Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Revol.Balance and Revol Util. Values</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-body" style="display: none;">
+                        <h4>1. Revolving Balance (Credit Card Debt Balance) Analysis (Top Two Graphs)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>Box Plot (Top Left): The box plots for both the “Fully Paid” and “Charged Off” groups are nearly identical. There is no significant difference between the median lines (the line in the middle of the boxes), the interquartile range (box size), and the distribution ranges (whiskers).</li>
+                                    <li>Histogram (Top Right): The distribution curves of the two groups also largely overlap. For both groups, the debt balance distribution is right-skewed, meaning most borrowers' balances are concentrated at low and medium levels. However, the distribution of bad debts does not clearly diverge from the distribution of paid debts.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Commentary:</strong>
+                                <ul>
+                                    <li>These two graphs tell us one thing very clearly: The mere height of a borrower's credit card debt balance is not, by itself, a strong indicator for predicting the risk of that loan defaulting. A person with a low debt balance may still default on their loan, while another with a high debt balance may repay their debt without issue. There is no clear distinguishing power between the variables.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. Revolving Utilization (Credit Card Usage Ratio) Analysis (The Two Graphs Below)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Observation:</strong>
+                                <ul>
+                                    <li>Box Plot (Bottom Left): Here, the situation is completely different. The box for the “Charged Off” group is positioned significantly higher than the box for the “Fully Paid” group. The median utilization rate for the delinquent credit group is significantly higher than that of the paid group.</li>
+                                    <li>Histogram (Bottom Right): The distinction in this graph is even more striking. The distribution curve for the “Charged Off” group (orange) is clearly shifted to the right compared to the curve for the “Fully Paid” group (blue). This visually demonstrates that borrowers who default on their credit generally have higher credit card utilization rates.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Analytical Commentary:</strong>
+                                <ul>
+                                    <li>Here's a critical finding for our project! The credit card utilization rate (revol_util) is a very powerful variable in predicting credit default risk. Borrowers who consistently use a large portion of their credit card limit are more likely to default on their loans.</li>
+                                    <li>Why Does This Make Sense? A high utilization rate may indicate that the borrower is financially strained, experiencing liquidity issues, and struggling to manage their existing debts. These individuals are vulnerable to unexpected expenses or even a small drop in income, putting them at risk of defaulting on new credit payments.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>Overall Assessment and Strategic Implications</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                When we combine these four graphs, the main story that emerges is this:
+                                <ul>
+                                    <li><strong>It's Not the Amount That Matters, It's the Ratio:</strong> When analyzing credit risk, what matters more than how much debt a person has (revol_bal) is the ratio of that debt to the limit offered to them (revol_util). A person with a credit card debt of $20,000 but a limit of $100,000 (20% utilization) may be much less risky than a person with a debt of $5,000 but a limit of $6,000 (83% utilization).</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Impact on Modeling:</strong>
+                                <ul>
+                                    <li>The revol_util variable is likely to be one of the most important features in the machine learning model you build. The model will establish a strong relationship between high revol_util values and high default probability.</li>
+                                    <li>The revol_bal variable, on its own, may have low predictive power. It will either be assigned a lower weight in the model or be combined with other variables (feature engineering) to make it meaningful.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 18th Line -->
+    <hr class="my-4"> 
+    <div class="all-charts-container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Public Records Class Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged Off Rate by Public Rec.</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Public Records Bankcrupties Class Dist. by Loan Status</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termDonutChart" class="h-400"></div> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="my-20 text-dark box-title">Charged Off Rate by Public Rec. Bankcrupties</h4>
+                    </div>
+                    <div class="box-body">
+                        <div id="termGroupedBarChart" class="h-400"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="box box-slided-up">
+                    <div class="box-header with-border">
+                        <h4 class="box-title"><strong>Observations & Analytical Comments about Pub.Rec and Pub.Rec. Bankcrupties Values</strong></h4>
+                        <ul class="box-controls pull-right">
+                            <li><a class="box-btn-slide" href="#"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="box-body" style="display: none;">
+                        <h4>1. pub_rec (Public Records) Analysis (Top Graphs)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Frequency Chart (Top Left):</strong> This chart visually confirms what we saw in our previous statistical summary: the overwhelming majority of debtors have no public records (0). The number of those with 1, 2, or more records is so small that they are barely visible on the chart.
+                            </li>
+                            <li>
+                                <strong>Default Rate Chart (Top Right):</strong> This chart provides the most important information.
+                                <ul>
+                                    <li>The default rate for those with no public records is close to the overall average for the data set (approximately 19%).</li>
+                                    <li>However, having even one (1) public record significantly increases the default rate to approximately 28%.</li>
+                                    <li>The rates for those with 2 or more records also appear high, but the statistical reliability of these rates is low because the number of individuals in these groups is very small.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>2. pub_rec_bankruptcies (Bankruptcy Records) Analysis (Lower Graphs)</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                <strong>Frequency Graph (Lower Left):</strong> We see almost the same story as with pub_rec. A very large portion of debtors have no bankruptcy records (0).
+                            </li>
+                            <li>
+                                <strong>Default Rate Chart (Bottom Right):</strong> The trend here is also very similar and clear.
+                                <ul>
+                                    <li>The default rate for those with no bankruptcy records is again at the base level.</li>
+                                    <li>However, having just one (1) bankruptcy record again significantly increases the default rate.</li>
+                                    <li>The ratio for those with two bankruptcy records appears even higher, but again, the sample size in this group is very small.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <hr class="my-4">
+
+                        <h4>Overall Assessment and Strategic Implications 🎯</h4>
+                        <ul class="analysis-list">
+                            <li>
+                                The analysis of these two variables gives us a common and very clear result:
+                                <ul>
+                                    <li>pub_rec and pub_rec_bankruptcies are “rare event” type predictive variables. That is, they are not found in the majority of the population, but when they are present, they give a very strong negative signal for default risk.</li>
+                                    <li>The most important information in these variables is the sharp distinction between a person having 0 records and having 1 or more records. The difference between 1 record and 2 records is not as meaningful and reliable as the difference between 0 and 1.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
 </section>
 
@@ -407,4 +1957,9 @@
 {{ term_grouped_charged_off|json_script:"term-grouped-charged-off-data" }}
 {{ term_mean_labels|json_script:"term-mean-labels-data" }}
 {{ term_mean_data|json_script:"term-mean-data-data" }}
+
+{{ ltoi_boxplot_data_json|json_script:"ltoi-boxplot-data" }}
+{{ income_boxplot_data_json|json_script:"income-boxplot-data" }}
+
+
 {% endblock content %}

@@ -10,6 +10,26 @@ from src.exception import CustomException
 from django.core.cache import cache
 from src.logger import logging
 
+def prepare_grouped_data(df, feature_name):
+            """Auxiliary function: Prepares grouped and sorted data."""
+            
+            sorted_labels = sorted(df[feature_name].dropna().unique())
+            
+            grouped_data = df.groupby([feature_name, 'loan_status']).size().unstack(fill_value=0).reindex(sorted_labels)
+            
+            labels = grouped_data.index.tolist()
+            fully_paid = grouped_data['Fully Paid'].values.tolist()
+            charged_off = grouped_data['Charged Off'].values.tolist()
+            return labels, fully_paid, charged_off
+
+def prepare_mean_data(df, feature_name):
+            """Auxiliary function: Prepares grouped and sorted average data."""
+            
+            grouped_data = df.groupby(feature_name)['loan_status_bin'].mean()
+            
+            labels = grouped_data.index.tolist()
+            data = grouped_data.values.tolist()
+            return labels, data
 
 def home_view(request):
     return render(request, "index.html")
@@ -26,6 +46,10 @@ def eda_view(request):
         df = pd.read_csv("notebook/data/lending_club_loan_two.csv")
         if 'loan_status_bin' not in df.columns:
             df['loan_status_bin'] = df['loan_status'].map({'Fully Paid': 0, 'Charged Off': 1})
+
+        issue_d_dt = pd.to_datetime(df['issue_d'], format='%b-%Y', errors='coerce')
+        earliest_cr_line_dt = pd.to_datetime(df['earliest_cr_line'], format='%b-%Y', errors='coerce')
+        df['credit_history_length'] = (issue_d_dt - earliest_cr_line_dt).dt.days / 365.25
 
         loan_status_counts = df['loan_status'].value_counts()
         status_labels = loan_status_counts.index.tolist()
@@ -95,9 +119,9 @@ def eda_view(request):
             y_data = []
             for cat in income_labels:
                 subset = df[(df['income_cat'] == cat) & (df['loan_status'] == status)]
-                # Her bir veri noktası için x ve y değerlerini ekliyoruz
+                
                 y_data.extend(subset['loan_amnt'].dropna().tolist())
-                x_data.extend([cat] * len(subset)) # Kategori adını veri sayısı kadar tekrar et
+                x_data.extend([cat] * len(subset)) 
             
             income_plot_data.append({
                                     'x': x_data,
@@ -106,6 +130,158 @@ def eda_view(request):
                                     'name': status,
                                     'boxpoints': 'outliers'
                                     })
+            
+
+        app_type_counts = df['application_type'].value_counts()
+        app_type_labels = app_type_counts.index.tolist()
+        app_type_data = app_type_counts.values.tolist()
+
+        app_type_grouped_counts = df.groupby(['application_type', 'loan_status']).size().unstack(fill_value=0)
+        app_type_grouped_labels = app_type_grouped_counts.index.tolist()
+        app_type_grouped_fully_paid = app_type_grouped_counts['Fully Paid'].values.tolist()
+        app_type_grouped_charged_off = app_type_grouped_counts['Charged Off'].values.tolist()
+
+        app_type_mean = df.groupby('application_type')['loan_status_bin'].mean()
+        app_type_mean_labels = app_type_mean.index.tolist()
+        app_type_mean_data = app_type_mean.values.tolist()
+
+        ordered_categories = [
+            '< 1 year', '1 year', '2 years', '3 years', '4 years', '5 years',
+            '6 years', '7 years', '8 years', '9 years', '10+ years'
+        ]
+
+        emp_length_counts = df['emp_length'].value_counts().reindex(ordered_categories, fill_value=0)
+        emp_length_labels = emp_length_counts.index.tolist()
+        emp_length_data = emp_length_counts.values.tolist()
+
+        emp_length_grouped_counts = df.groupby(['emp_length', 'loan_status']).size().unstack(fill_value=0).reindex(ordered_categories, fill_value=0)
+        emp_length_grouped_labels = emp_length_grouped_counts.index.tolist()
+        emp_length_grouped_fully_paid = emp_length_grouped_counts['Fully Paid'].values.tolist()
+        emp_length_grouped_charged_off = emp_length_grouped_counts['Charged Off'].values.tolist()
+
+        emp_length_mean = df.groupby('emp_length')['loan_status_bin'].mean().reindex(ordered_categories, fill_value=0)
+        emp_length_mean_labels = emp_length_mean.index.tolist()
+        emp_length_mean_data = emp_length_mean.values.tolist()
+
+
+        int_rate_bins = [5, 10, 15, 25, 35]
+        int_rate_labels = ['5-10', '10-15', '15-25', '25-35']
+        df['int_rate_cat'] = pd.cut(df['int_rate'], bins=int_rate_bins, labels=int_rate_labels, right=False)
+
+        
+        int_rate_grouped_counts = df.groupby(['int_rate_cat', 'loan_status'], observed=True).size().unstack(fill_value=0)
+        int_rate_grouped_labels = int_rate_grouped_counts.index.astype(str).tolist()
+        int_rate_grouped_fully_paid = int_rate_grouped_counts['Fully Paid'].values.tolist()
+        int_rate_grouped_charged_off = int_rate_grouped_counts['Charged Off'].values.tolist()
+
+        
+        int_rate_mean = df.groupby('int_rate_cat', observed=True)['loan_status_bin'].mean()
+        int_rate_mean_labels = int_rate_mean.index.astype(str).tolist()
+        int_rate_mean_data = int_rate_mean.values.tolist()
+
+        installment_boxplot_data = []
+        for status in ['Fully Paid', 'Charged Off']:
+            installment_boxplot_data.append({
+                'y': df[df['loan_status'] == status]['installment'].dropna().tolist(),
+                'type': 'box',
+                'name': status,
+                'boxpoints': 'outliers'
+            })
+
+        
+        min_inst = df['installment'].min()
+        max_inst = df['installment'].max()
+        installment_bins = np.linspace(min_inst, max_inst, 51) 
+
+        fp_data = df[df['loan_status'] == 'Fully Paid']['installment'].dropna()
+        co_data = df[df['loan_status'] == 'Charged Off']['installment'].dropna()
+        
+        
+        hist_fp, installment_bin_edges = np.histogram(fp_data, bins=installment_bins)
+        hist_co, _ = np.histogram(co_data, bins=installment_bins)
+
+        
+        installment_bin_centers = (installment_bin_edges[:-1] + installment_bin_edges[1:]) / 2
+
+        installment_hist_labels = installment_bin_centers.tolist()
+        installment_hist_fully_paid = hist_fp.tolist()
+        installment_hist_charged_off = hist_co.tolist()
+
+        grade_dist_labels, grade_dist_fp, grade_dist_co = prepare_grouped_data(df, 'grade')
+        sub_grade_dist_labels, sub_grade_dist_fp, sub_grade_dist_co = prepare_grouped_data(df, 'sub_grade')
+        home_ownership_dist_labels, home_ownership_dist_fp, home_ownership_dist_co = prepare_grouped_data(df, 'home_ownership')
+        verification_status_dist_labels, verification_status_dist_fp, verification_status_dist_co = prepare_grouped_data(df, 'verification_status')
+
+        grade_rate_labels, grade_rate_data = prepare_mean_data(df, 'grade')
+        sub_grade_rate_labels, sub_grade_rate_data = prepare_mean_data(df, 'sub_grade')
+        home_ownership_rate_labels, home_ownership_rate_data = prepare_mean_data(df, 'home_ownership')
+        verification_status_rate_labels, verification_status_rate_data = prepare_mean_data(df, 'verification_status')
+        
+
+        credit_history_boxplot_data = []
+        for status in ['Fully Paid', 'Charged Off']:
+            credit_history_boxplot_data.append({
+                'y': df[df['loan_status'] == status]['credit_history_length'].dropna().tolist(),
+                'type': 'box',
+                'name': status,
+                'boxpoints': 'outliers'
+            })
+        
+        
+        min_hist = df['credit_history_length'].dropna().min()
+        max_hist = df['credit_history_length'].dropna().max()
+        credit_history_bins = np.linspace(min_hist, max_hist, 51)
+
+        fp_data = df[df['loan_status'] == 'Fully Paid']['credit_history_length'].dropna()
+        co_data = df[df['loan_status'] == 'Charged Off']['credit_history_length'].dropna()
+        
+        hist_fp, bin_edges = np.histogram(fp_data, bins=credit_history_bins)
+        hist_co, _ = np.histogram(co_data, bins=credit_history_bins)
+
+        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+        credit_history_hist_labels = bin_centers.tolist()
+        credit_history_hist_fp = hist_fp.tolist()
+        credit_history_hist_co = hist_co.tolist()
+
+
+        purpose_avg_loan = df.groupby('purpose')['loan_amnt'].mean().sort_values()
+        purpose_avg_loan_labels = purpose_avg_loan.index.tolist()
+        purpose_avg_loan_data = purpose_avg_loan.values.tolist()
+
+        purpose_rate = df.groupby('purpose')['loan_status_bin'].mean().sort_values()
+        purpose_rate_labels = purpose_rate.index.tolist()
+        purpose_rate_data = purpose_rate.values.tolist()
+
+
+        dti_quantile_99 = df['dti'].quantile(0.99)
+        filtered_dti_df = df[df['dti'] <= dti_quantile_99]
+        dti_boxplot_data = []
+        for status in ['Fully Paid', 'Charged Off']:
+            dti_boxplot_data.append({
+                'y': filtered_dti_df[filtered_dti_df['loan_status'] == status]['dti'].dropna().tolist(),
+                'type': 'box',
+                'name': status,
+                'boxpoints': 'outliers'
+            })
+        
+        min_dti = filtered_dti_df['dti'].dropna().min()
+        max_dti = filtered_dti_df['dti'].dropna().max()
+        dti_bins = np.linspace(min_dti, max_dti, 51)
+
+        fp_data = filtered_dti_df[filtered_dti_df['loan_status'] == 'Fully Paid']['dti'].dropna()
+        co_data = filtered_dti_df[filtered_dti_df['loan_status'] == 'Charged Off']['dti'].dropna()
+        
+        hist_fp, bin_edges = np.histogram(fp_data, bins=dti_bins)
+        hist_co, _ = np.histogram(co_data, bins=dti_bins)
+
+        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+        dti_hist_labels = bin_centers.tolist()
+        dti_hist_fp = hist_fp.tolist()
+        dti_hist_co = hist_co.tolist()
+
+
 
         context = {
             'status_labels': status_labels,
@@ -131,6 +307,80 @@ def eda_view(request):
 
             'ltoi_boxplot_data': ltoi_plot_data,
             'income_boxplot_data': income_plot_data,
+
+            'app_type_labels': app_type_labels,
+            'app_type_data': app_type_data,
+            'app_type_grouped_labels': app_type_grouped_labels,
+            'app_type_grouped_fully_paid': app_type_grouped_fully_paid,
+            'app_type_grouped_charged_off': app_type_grouped_charged_off,
+            'app_type_mean_labels': app_type_mean_labels,
+            'app_type_mean_data': app_type_mean_data,
+
+            'emp_length_labels': emp_length_labels,
+            'emp_length_data': emp_length_data,
+            'emp_length_grouped_labels': emp_length_grouped_labels,
+            'emp_length_grouped_fully_paid': emp_length_grouped_fully_paid,
+            'emp_length_grouped_charged_off': emp_length_grouped_charged_off,
+            'emp_length_mean_labels': emp_length_mean_labels,
+            'emp_length_mean_data': emp_length_mean_data,
+
+            'int_rate_grouped_labels': int_rate_grouped_labels,
+            'int_rate_grouped_fully_paid': int_rate_grouped_fully_paid,
+            'int_rate_grouped_charged_off': int_rate_grouped_charged_off,
+            'int_rate_mean_labels': int_rate_mean_labels,
+            'int_rate_mean_data': int_rate_mean_data,
+
+
+            'installment_boxplot_data': installment_boxplot_data,
+            'installment_hist_labels': installment_hist_labels,
+            'installment_hist_fully_paid': installment_hist_fully_paid,
+            'installment_hist_charged_off': installment_hist_charged_off,
+
+
+            'grade_dist_labels': grade_dist_labels,
+            'grade_dist_fp': grade_dist_fp,
+            'grade_dist_co': grade_dist_co,
+
+            'sub_grade_dist_labels': sub_grade_dist_labels,
+            'sub_grade_dist_fp': sub_grade_dist_fp,
+            'sub_grade_dist_co': sub_grade_dist_co,
+
+            'home_ownership_dist_labels': home_ownership_dist_labels,
+            'home_ownership_dist_fp': home_ownership_dist_fp,
+            'home_ownership_dist_co': home_ownership_dist_co,
+
+            'verification_status_dist_labels': verification_status_dist_labels,
+            'verification_status_dist_fp': verification_status_dist_fp,
+            'verification_status_dist_co': verification_status_dist_co,
+
+            'grade_rate_labels': grade_rate_labels,
+            'grade_rate_data': grade_rate_data,
+
+            'sub_grade_rate_labels': sub_grade_rate_labels,
+            'sub_grade_rate_data': sub_grade_rate_data,
+
+            'home_ownership_rate_labels': home_ownership_rate_labels,
+            'home_ownership_rate_data': home_ownership_rate_data,
+            
+            'verification_status_rate_labels': verification_status_rate_labels,
+            'verification_status_rate_data': verification_status_rate_data,
+
+
+            'credit_history_boxplot_data': credit_history_boxplot_data,
+            'credit_history_hist_labels': credit_history_hist_labels,
+            'credit_history_hist_fp': credit_history_hist_fp,
+            'credit_history_hist_co': credit_history_hist_co,
+
+            'purpose_avg_loan_labels': purpose_avg_loan_labels,
+            'purpose_avg_loan_data': purpose_avg_loan_data,
+            'purpose_rate_labels': purpose_rate_labels,
+            'purpose_rate_data': purpose_rate_data,
+
+
+            'dti_boxplot_data': dti_boxplot_data,
+            'dti_hist_labels': dti_hist_labels,
+            'dti_hist_fp': dti_hist_fp,
+            'dti_hist_co': dti_hist_co,
         }
         cache.set('eda_context', context, 3600)
         return render(request, 'explatory_data_analysis.html', context)

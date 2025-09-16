@@ -40,7 +40,7 @@
                         <h4 class="my-20 text-dark box-title">Loan Amount Distribution</h4>
                     </div>
                     <div class="box-body">
-                        <div id="loanAmntHistChart" class="h-400"></div>
+                        <div id="loanAmountAreaChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
             <div class="col-lg-6 col-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h4 class="my-20 text-dark box-title">Default Rate by Loan Amount Category</h4>
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Loan Amount Category</h4>
                     </div>
                     <div class="box-body">
                         <div id="loanStatusMeanChart" class="h-400"></div>
@@ -395,7 +395,7 @@
                         <h4 class="my-20 text-dark box-title">Loan To Income Value Distribution by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="loanToIncomeBoxPlot" class="h-400"></div> 
+                        <div id="ltoiPlotlyBoxPlot" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -406,7 +406,7 @@
                         <h4 class="my-20 text-dark box-title">Annual Income Category Distribution by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="incomeCatBoxPlot" class="h-400"></div>
+                        <div id="incomePlotlyBoxPlot" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -528,7 +528,7 @@
             <div class="col-lg-4 col-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h4 class="my-20 text-dark box-title">Default Rate by Application Types Categories</h4>
+                        <h4 class="my-20 text-dark box-title">Charged-Off Rate by Application Types Categories</h4>
                     </div>
                     <div class="box-body">
                         <div id="termMeanBarChart" class="h-400"></div>
@@ -1918,7 +1918,7 @@
 
                         <hr class="my-4">
 
-                        <h4>Overall Assessment and Strategic Implications 🎯</h4>
+                        <h4>Overall Assessment and Strategic Implications</h4>
                         <ul class="analysis-list">
                             <li>
                                 The analysis of these two variables gives us a common and very clear result:
@@ -1939,16 +1939,17 @@
 
 {{ status_labels|json_script:"status-labels-data" }}
 {{ status_data|json_script:"status-data-data" }}
-{{ loan_amnt_labels|json_script:"loan-amnt-labels-data" }}
-{{ loan_amnt_data|json_script:"loan-amnt-data-data" }}
-{{ loan_amnt_kde_data|json_script:"loan-amnt-kde-data" }}
+
+{{ loan_amnt_area_labels|json_script:"loan-amnt-area-labels" }}
+{{ loan_amnt_area_data|json_script:"loan-amnt-area-data" }}
+
 
 {{ cat_labels|json_script:"cat-labels-data" }}
 {{ fully_paid_data|json_script:"fully-paid-data" }}
 {{ charged_off_data|json_script:"charged-off-data" }}
 {{ mean_labels|json_script:"mean-labels-data" }}
 {{ mean_data|json_script:"mean-data-data" }}
-
+{{ mean_trendline_data|json_script:"mean-trendline-data" }}
 
 {{ term_labels|json_script:"term-labels-data" }}
 {{ term_data|json_script:"term-data-data" }}
@@ -1958,8 +1959,9 @@
 {{ term_mean_labels|json_script:"term-mean-labels-data" }}
 {{ term_mean_data|json_script:"term-mean-data-data" }}
 
-{{ ltoi_boxplot_data_json|json_script:"ltoi-boxplot-data" }}
-{{ income_boxplot_data_json|json_script:"income-boxplot-data" }}
+{{ ltoi_boxplot_data|json_script:"ltoi-plot-data" }}
+{{ income_boxplot_data|json_script:"income-plot-data" }}
+
 
 
 {% endblock content %}

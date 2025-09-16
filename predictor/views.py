@@ -31,29 +31,30 @@ def eda_view(request):
         status_labels = loan_status_counts.index.tolist()
         status_data = loan_status_counts.values.tolist()
 
-        bins = np.arange(0, 40001, 2000) 
-        labels = [f'{int(i/1000)}k-{int((i+2000)/1000)}k' for i in bins[:-1]]
-        df['loan_amnt_binned'] = pd.cut(df['loan_amnt'], bins=bins, labels=labels, right=False)
-        loan_amnt_counts = df['loan_amnt_binned'].value_counts().sort_index()
-        loan_amnt_labels = loan_amnt_counts.index.tolist()
-        loan_amnt_data = loan_amnt_counts.values.tolist()
+        bins = [0, 5000, 10000, 15000, 20000, 25000, 30000, 40000]
+        labels = ['0-5k', '5k-10k', '10k-15k', '15k-20k', '20k-25k', '25k-30k', '30k-40k']
+        df['loan_amnt_cat'] = pd.cut(df['loan_amnt'], bins=bins, labels=labels, right=False)
 
-        bin_centers = [(bins[i] + bins[i+1]) / 2 for i in range(len(bins)-1)]
-        kde = gaussian_kde(df['loan_amnt'].dropna()) 
-        loan_amnt_kde_data = kde(bin_centers).tolist()
+        loan_amnt_counts = df['loan_amnt_cat'].value_counts().sort_index()
+        loan_amnt_area_labels = loan_amnt_counts.index.astype(str).tolist()
+        loan_amnt_area_data = loan_amnt_counts.values.tolist()
 
-        bins_cat = [0, 5000, 10000, 15000, 20000, 25000, 30000, 40000]
-        labels_cat = ['0-5k', '5k-10k', '10k-15k', '15k-20k', '20k-25k', '25k-30k', '30k-40k']
-        df['loan_amnt_cat'] = pd.cut(df['loan_amnt'], bins=bins_cat, labels=labels_cat)
+
         df['loan_status_bin'] = df['loan_status'].map({'Fully Paid': 0, 'Charged Off': 1})
         grouped_countplot = df.groupby(['loan_amnt_cat', 'loan_status']).size().unstack(fill_value=0)
         cat_labels = grouped_countplot.index.tolist()
+
+        
+
         fully_paid_data = grouped_countplot['Fully Paid'].values.tolist()
         charged_off_data = grouped_countplot['Charged Off'].values.tolist()
 
         grouped_barplot = df.groupby('loan_amnt_cat')['loan_status_bin'].mean().reset_index()
         mean_labels = grouped_barplot['loan_amnt_cat'].tolist()
         mean_data = grouped_barplot['loan_status_bin'].tolist()
+        x_values = np.arange(len(mean_data))
+        m, c = np.polyfit(x_values, mean_data, 1)
+        mean_trendline_data = (m * x_values + c).tolist()
 
         term_counts = df['term'].value_counts()
         term_labels = term_counts.index.tolist()
@@ -71,55 +72,65 @@ def eda_view(request):
 
 
 
-        df['loan_to_income'] = np.where(df['annual_inc']==0, 0 , df['loan_amnt'] / df['annual_inc'])
+        df['loan_to_income'] = np.where(df['annual_inc'] == 0, 0, df['loan_amnt'] / df['annual_inc'])
         income_bins = [0, 40000, 80000, 120000, 160000, df['annual_inc'].max() + 1]
         income_labels = ['0-40k', '40k-80k', '80k-120k', '120k-160k', '160k+']
         df['income_cat'] = pd.cut(df['annual_inc'], bins=income_bins, labels=income_labels, right=False)
 
-        ltoi_boxplot_data_list = []
-        
-        for status in df['loan_status'].unique():
-            stats = df[(df['loan_status'] == status) & (df['loan_to_income'] < 1)]['loan_to_income'].describe()
-            ltoi_boxplot_data_list.append({
-                'x': status,
-                'y': [stats['min'], stats['25%'], stats['50%'], stats['75%'], stats['max']]
+
+        ltoi_plot_data = []
+        filtered_df = df[df['loan_to_income'] < 1]
+        for status in ['Fully Paid', 'Charged Off']:
+            ltoi_plot_data.append({
+                'y': filtered_df[filtered_df['loan_status'] == status]['loan_to_income'].dropna().tolist(),
+                'type': 'box',
+                'name': status,
+                'boxpoints': 'outliers' 
             })
 
         
-        income_boxplot_data_list = []
-        
+        income_plot_data = []
         for status in ['Fully Paid', 'Charged Off']:
-            series_data = []
-            for cat in df['income_cat'].cat.categories:
-                stats = df[(df['income_cat'] == cat) & (df['loan_status'] == status)]['loan_amnt'].describe()
-                series_data.append({
-                    'x': str(cat),
-                    'y': [stats['min'], stats['25%'], stats['50%'], stats['75%'], stats['max']]
-                })
-            income_boxplot_data_list.append({'name': status, 'type': 'boxPlot', 'data': series_data})
+            x_data = []
+            y_data = []
+            for cat in income_labels:
+                subset = df[(df['income_cat'] == cat) & (df['loan_status'] == status)]
+                # Her bir veri noktası için x ve y değerlerini ekliyoruz
+                y_data.extend(subset['loan_amnt'].dropna().tolist())
+                x_data.extend([cat] * len(subset)) # Kategori adını veri sayısı kadar tekrar et
+            
+            income_plot_data.append({
+                                    'x': x_data,
+                                    'y': y_data,
+                                    'type': 'box',
+                                    'name': status,
+                                    'boxpoints': 'outliers'
+                                    })
+
         context = {
-        'status_labels': status_labels,
-        'status_data': status_data,
-        'loan_amnt_labels': loan_amnt_labels,
-        'loan_amnt_data': loan_amnt_data,
-        'loan_amnt_kde_data': loan_amnt_kde_data,
+            'status_labels': status_labels,
+            'status_data': status_data,
+            
+            'loan_amnt_area_labels': loan_amnt_area_labels,
+            'loan_amnt_area_data': loan_amnt_area_data,
 
-        'cat_labels': cat_labels,
-        'fully_paid_data': fully_paid_data,
-        'charged_off_data': charged_off_data,
-        'mean_labels': mean_labels,
-        'mean_data': mean_data,
+            'cat_labels': cat_labels,
+            'fully_paid_data': fully_paid_data,
+            'charged_off_data': charged_off_data,
+            'mean_labels': mean_labels,
+            'mean_data': mean_data,
+            'mean_trendline_data': mean_trendline_data,
 
-        'term_labels': term_labels,
-        'term_data': term_data,
-        'term_grouped_labels': term_grouped_labels,
-        'term_grouped_fully_paid': term_grouped_fully_paid,
-        'term_grouped_charged_off': term_grouped_charged_off,
-        'term_mean_labels': term_mean_labels,
-        'term_mean_data': term_mean_data,
+            'term_labels': term_labels,
+            'term_data': term_data,
+            'term_grouped_labels': term_grouped_labels,
+            'term_grouped_fully_paid': term_grouped_fully_paid,
+            'term_grouped_charged_off': term_grouped_charged_off,
+            'term_mean_labels': term_mean_labels,
+            'term_mean_data': term_mean_data,
 
-        'ltoi_boxplot_data_json': json.dumps(ltoi_boxplot_data_list),
-        'income_boxplot_data_json': json.dumps(income_boxplot_data_list),
+            'ltoi_boxplot_data': ltoi_plot_data,
+            'income_boxplot_data': income_plot_data,
         }
         cache.set('eda_context', context, 3600)
         return render(request, 'explatory_data_analysis.html', context)

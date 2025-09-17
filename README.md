@@ -11,7 +11,6 @@ A comprehensive, end-to-end machine learning project that predicts credit defaul
 
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
-- [Screenshots](#screenshots)
 - [Tech Stack](#tech-stack)
 - [Installation and Setup](#installation-and-setup)
 - [Project Structure](#project-structure)
@@ -53,8 +52,8 @@ Follow these steps to get the project up and running on your local machine.
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-cd your-repo-name
+git clone [https://github.com/ccemozclk/Credit-Risk.git](https://github.com/ccemozclk/Credit-Risk.git)
+cd Credit-Risk
 ```
 
 ### 2. Run with Docker (Recommended)
@@ -170,4 +169,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Cem OZCELIK - [i.cemozcelik@gmail.com](mailto:i.cemozcelik@gmail.com)
 
-Project Link: [https://github.com/your-username/your-repo-name](https://github.com/your-username/your-repo-name)
+Project Link: [https://github.com/ccemozclk/Credit-Risk.git](https://github.com/ccemozclk/Credit-Risk.git)

@@ -31,12 +31,8 @@
                     <a href="{% url 'predictor:home' %}" class="logo justify-content-around">
                         <!-- logo-->
                         <div class="logo-lg">
-                            <span class="light-logo">
-                                <img src="{% static 'images/logo-light-text.png' %}" alt="logo">
-                            </span>
-                            <span class="dark-logo">
-                                <img src="{% static 'images/logo-light-text.png' %}" alt="logo">
-                            </span>
+                            <span class="light-logo"><img src="{% static 'images/logo-light-text.png' %}" alt="logo"></span>
+                            <span class="dark-logo"><img src="{% static 'images/logo-light-text.png' %}" alt="logo"></span>
                         </div>
                     </a>	
                 </div>
@@ -60,6 +56,8 @@
                         </div>
                         <div class="navbar-custom-menu r-side">
                             <ul class="nav navbar-nav">
+                                
+
                                 <li class="btn-group d-lg-inline-flex d-none">
                                     <div class="app-menu">
                                         <div class="search-bx mx-5">
@@ -130,6 +128,104 @@
                     <!-- Main content -->
                     <section class="container">
                         {% block content %}
+                        <div class="all-charts-container">
+                            <div class="row">
+                                <div class="col-lg-12 col-12">
+                                    <div class="box box-slided-up">
+                                        <div class="box-header with-border">
+                                            <h4 class="my-20 text-dark box-title"><strong>Project Summary</strong></h4>
+                                            <ul class="box-controls pull-right">
+                                                <li>
+                                                    <a class="box-btn-slide" href="#">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="box-body" style="display: none;">
+                                            <h4>End-to-End Credit Risk Modeling and Interactive Analysis Platform</h4>
+                                            <ul class="analysis-list">
+                                                <ul>
+                                                    <li>
+                                                            In this project, a comprehensive machine learning solution was developed to predict credit risk, one of the most critical areas in the financial sector. The project was executed on the publicly available Lending Club dataset and encompasses the entire workflow, from raw data processing to an interactive web application delivered to the end-user.
+                                                    </li>
+                                                </ul>
+                                                
+                                            </ul>
+
+                                            <hr class="my-4"> 
+                                            <h4>Key Stages and Achievements:</h4>
+                                            <ul class="analysis-list">
+                                                <li>
+                                                    <strong>Data Analysis and Visualization:</strong>
+                                                    <ul>
+                                                        <li>
+                                                            The foundational Exploratory Data Analysis (EDA) was conducted in detail within the Exploratory_Data_Analysis.ipynb notebook. These analyses were elevated beyond a static report and transformed into a dynamic, interactive web platform using Python Django and JavaScript. This allows complex data relationships and insights to be presented through easily understandable visual charts, accessible at the localhost/exploratory-data-analysis URL.
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <strong>Machine Learning Modeling:</strong>
+                                                    <ul>
+                                                        <li>
+                                                            To predict credit default risk, powerful classification models, led by XGBoost Classifier, along with Random Forest, Decision Tree, and Logistic Regression, were comparatively trained. The F1-Score was established as the primary success metric, as it is critical for measuring a model's true performance on imbalanced datasets.
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <strong>Model Performance:</strong>
+                                                    <ul>
+                                                        <li>
+                                                            The developed XGBoost model achieved an F1-Score of 63% on the test data. This score demonstrates a balanced success in identifying both high-risk (Charged Off) and safe (Fully Paid) loans. The model's other performance metrics are as follows:
+                                                            <ul>
+                                                                <li><strong>Accuracy:</strong>83.35%</li>
+                                                                <li><strong>Precision:</strong>55.66%</li>
+                                                                <li><strong>Recall:</strong>74.17%</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <strong>Deployment:</strong>
+                                                    <ul>
+                                                        <li>
+                                                            The entire application was containerized using Docker to ensure portability and reproducibility. This approach allows both the analysis platform and the model to be easily run and scaled across different environments.
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="all-charts-container">
+                            <div class="row">
+                                <div class="col-lg-12 col-12">
+                                    <div class="box box-slided-up">
+                                        <div class="box-header with-border">
+                                            <h4 class="my-20 text-dark box-title"><strong>My Resume</strong></h4>
+                                            <ul class="box-controls pull-right">
+                                                <li>
+                                                    <a class="box-btn-slide" href="#">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="box-body" style="display: none;">
+                                            <ul class="analysis-list">
+                                                <iframe src="{% static 'document/Resume.pdf' %}" width="100%" height="800px" style="border:none;">
+                                                    <p>Your browser cannot display this PDF.<a href="{% static 'document/Resume.pdf' %}">You can download it from here instead.</a></p>
+                                                </iframe>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
                         {% endblock content %}
                     </section>
                 </div>

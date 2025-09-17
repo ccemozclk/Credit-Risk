@@ -1,5 +1,10 @@
 {% extends "index.html" %}
 {% load static %}
+<!--
+{% block page_indicator %}
+    Exploratory Data Analysis Page
+{% endblock page_indicator %}
+-->
 {% block content %}
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -1437,7 +1442,7 @@
                         <h4 class="my-20 text-dark box-title">Open Account Category Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="openAccGroupedChart" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1448,7 +1453,7 @@
                         <h4 class="my-20 text-dark box-title">Charged-Off Distribution by Open Account Category</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="openAccRateChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1522,7 +1527,7 @@
                         <h4 class="my-20 text-dark box-title">Total Account Category Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="totalAccGroupedChart" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1533,7 +1538,7 @@
                         <h4 class="my-20 text-dark box-title">Charged-Off Distribution by Total Account Category</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="totalAccRateChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1629,7 +1634,7 @@
                         <h4 class="my-20 text-dark box-title">Open Acc./Total Acc. Rate Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="openTotalAccBoxPlot" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1640,7 +1645,7 @@
                         <h4 class="my-20 text-dark box-title">Open Acc./Total Acc. Rate Histogram Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="openTotalAccHistChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1709,7 +1714,7 @@
                         <h4 class="my-20 text-dark box-title">Revolving Balance Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="revolBalBoxPlot" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1720,7 +1725,7 @@
                         <h4 class="my-20 text-dark box-title">Revolving Balance Histogram Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="revolBalHistChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1733,7 +1738,7 @@
                         <h4 class="my-20 text-dark box-title">Revolving Utilization Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="revolUtilBoxPlot" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1744,7 +1749,7 @@
                         <h4 class="my-20 text-dark box-title">Revolving Utilization Histogram Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="revolUtilHistChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1832,7 +1837,7 @@
                         <h4 class="my-20 text-dark box-title">Public Records Class Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="pubRecGroupedChart" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1843,7 +1848,7 @@
                         <h4 class="my-20 text-dark box-title">Charged Off Rate by Public Rec.</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="pubRecRateChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -1856,7 +1861,7 @@
                         <h4 class="my-20 text-dark box-title">Public Records Bankcrupties Class Dist. by Loan Status</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termDonutChart" class="h-400"></div> 
+                        <div id="pubRecBankGroupedChart" class="h-400"></div> 
                     </div>
                 </div>
             </div>
@@ -1867,7 +1872,7 @@
                         <h4 class="my-20 text-dark box-title">Charged Off Rate by Public Rec. Bankcrupties</h4>
                     </div>
                     <div class="box-body">
-                        <div id="termGroupedBarChart" class="h-400"></div>
+                        <div id="pubRecBankRateChart" class="h-400"></div>
                     </div>
                 </div>
             </div>
@@ -2037,5 +2042,46 @@
 {{ dti_hist_labels|json_script:"dti-hist-labels-data" }}
 {{ dti_hist_fp|json_script:"dti-hist-fp-data" }}
 {{ dti_hist_co|json_script:"dti-hist-co-data" }}
+
+{{ open_acc_grouped_labels|json_script:"open-acc-grouped-labels-data" }}
+{{ open_acc_grouped_fp|json_script:"open-acc-grouped-fp-data" }}
+{{ open_acc_grouped_co|json_script:"open-acc-grouped-co-data" }}
+{{ open_acc_rate_labels|json_script:"open-acc-rate-labels-data" }}
+{{ open_acc_rate_data|json_script:"open-acc-rate-data-data" }}
+
+
+{{ total_acc_grouped_labels|json_script:"total-acc-grouped-labels-data" }}
+{{ total_acc_grouped_fp|json_script:"total-acc-grouped-fp-data" }}
+{{ total_acc_grouped_co|json_script:"total-acc-grouped-co-data" }}
+{{ total_acc_rate_labels|json_script:"total-acc-rate-labels-data" }}
+{{ total_acc_rate_data|json_script:"total-acc-rate-data-data" }}
+
+{{ open_total_acc_boxplot_data|json_script:"open-total-acc-boxplot-data" }}
+{{ open_total_acc_hist_labels|json_script:"open-total-acc-hist-labels-data" }}
+{{ open_total_acc_hist_fp|json_script:"open-total-acc-hist-fp-data" }}
+{{ open_total_acc_hist_co|json_script:"open-total-acc-hist-co-data" }}
+
+
+{{ revol_bal_boxplot_data|json_script:"revol-bal-boxplot-data" }}
+{{ revol_bal_hist_labels|json_script:"revol-bal-hist-labels-data" }}
+{{ revol_bal_hist_fp|json_script:"revol-bal-hist-fp-data" }}
+{{ revol_bal_hist_co|json_script:"revol-bal-hist-co-data" }}
+{{ revol_util_boxplot_data|json_script:"revol-util-boxplot-data" }}
+{{ revol_util_hist_labels|json_script:"revol-util-hist-labels-data" }}
+{{ revol_util_hist_fp|json_script:"revol-util-hist-fp-data" }}
+{{ revol_util_hist_co|json_script:"revol-util-hist-co-data" }}
+
+
+{{ pub_rec_grouped_labels|json_script:"pub-rec-grouped-labels-data" }}
+{{ pub_rec_grouped_fp|json_script:"pub-rec-grouped-fp-data" }}
+{{ pub_rec_grouped_co|json_script:"pub-rec-grouped-co-data" }}
+{{ pub_rec_rate_labels|json_script:"pub-rec-rate-labels-data" }}
+{{ pub_rec_rate_data|json_script:"pub-rec-rate-data-data" }}
+
+{{ pub_rec_bank_grouped_labels|json_script:"pub-rec-bank-grouped-labels-data" }}
+{{ pub_rec_bank_grouped_fp|json_script:"pub-rec-bank-grouped-fp-data" }}
+{{ pub_rec_bank_grouped_co|json_script:"pub-rec-bank-grouped-co-data" }}
+{{ pub_rec_bank_rate_labels|json_script:"pub-rec-bank-rate-labels-data" }}
+{{ pub_rec_bank_rate_data|json_script:"pub-rec-bank-rate-data-data" }}
 
 {% endblock content %}

@@ -122,7 +122,48 @@ $(document).ready(function() {
         const dtiHistFp = JSON.parse(document.getElementById('dti-hist-fp-data').textContent);
         const dtiHistCo = JSON.parse(document.getElementById('dti-hist-co-data').textContent);
 
+        const openAccGroupedLabels = JSON.parse(document.getElementById('open-acc-grouped-labels-data').textContent);
+        const openAccGroupedFp = JSON.parse(document.getElementById('open-acc-grouped-fp-data').textContent);
+        const openAccGroupedCo = JSON.parse(document.getElementById('open-acc-grouped-co-data').textContent);
+        const openAccRateLabels = JSON.parse(document.getElementById('open-acc-rate-labels-data').textContent);
+        const openAccRateData = JSON.parse(document.getElementById('open-acc-rate-data-data').textContent);
+
+
+        const totalAccGroupedLabels = JSON.parse(document.getElementById('total-acc-grouped-labels-data').textContent);
+        const totalAccGroupedFp = JSON.parse(document.getElementById('total-acc-grouped-fp-data').textContent);
+        const totalAccGroupedCo = JSON.parse(document.getElementById('total-acc-grouped-co-data').textContent);
+        const totalAccRateLabels = JSON.parse(document.getElementById('total-acc-rate-labels-data').textContent);
+        const totalAccRateData = JSON.parse(document.getElementById('total-acc-rate-data-data').textContent);
+
+        const openTotalAccBoxPlotDataRaw = JSON.parse(document.getElementById('open-total-acc-boxplot-data').textContent);
+        const openTotalAccHistLabels = JSON.parse(document.getElementById('open-total-acc-hist-labels-data').textContent);
+        const openTotalAccHistFp = JSON.parse(document.getElementById('open-total-acc-hist-fp-data').textContent);
+        const openTotalAccHistCo = JSON.parse(document.getElementById('open-total-acc-hist-co-data').textContent);
+
         
+        const revolBalBoxPlotDataRaw = JSON.parse(document.getElementById('revol-bal-boxplot-data').textContent);
+        const revolBalHistLabels = JSON.parse(document.getElementById('revol-bal-hist-labels-data').textContent);
+        const revolBalHistFp = JSON.parse(document.getElementById('revol-bal-hist-fp-data').textContent);
+        const revolBalHistCo = JSON.parse(document.getElementById('revol-bal-hist-co-data').textContent);
+
+        const revolUtilBoxPlotDataRaw = JSON.parse(document.getElementById('revol-util-boxplot-data').textContent);
+        const revolUtilHistLabels = JSON.parse(document.getElementById('revol-util-hist-labels-data').textContent);
+        const revolUtilHistFp = JSON.parse(document.getElementById('revol-util-hist-fp-data').textContent);
+        const revolUtilHistCo = JSON.parse(document.getElementById('revol-util-hist-co-data').textContent);
+
+
+        const pubRecGroupedLabels = JSON.parse(document.getElementById('pub-rec-grouped-labels-data').textContent);
+        const pubRecGroupedFp = JSON.parse(document.getElementById('pub-rec-grouped-fp-data').textContent);
+        const pubRecGroupedCo = JSON.parse(document.getElementById('pub-rec-grouped-co-data').textContent);
+        const pubRecRateLabels = JSON.parse(document.getElementById('pub-rec-rate-labels-data').textContent);
+        const pubRecRateData = JSON.parse(document.getElementById('pub-rec-rate-data-data').textContent);
+
+        const pubRecBankGroupedLabels = JSON.parse(document.getElementById('pub-rec-bank-grouped-labels-data').textContent);
+        const pubRecBankGroupedFp = JSON.parse(document.getElementById('pub-rec-bank-grouped-fp-data').textContent);
+        const pubRecBankGroupedCo = JSON.parse(document.getElementById('pub-rec-bank-grouped-co-data').textContent);
+        const pubRecBankRateLabels = JSON.parse(document.getElementById('pub-rec-bank-rate-labels-data').textContent);
+        const pubRecBankRateData = JSON.parse(document.getElementById('pub-rec-bank-rate-data-data').textContent);
+
         function getColorForValue(value, min, max) {
             const ratio = (value - min) / (max - min);
             const red = Math.round(255 * ratio);
@@ -1229,8 +1270,138 @@ $(document).ready(function() {
         };
         var chart25 = new ApexCharts(document.querySelector("#dtiHistChart"), options25);
         chart25.render()
-    }
+
+
+
+        var options26 = createGroupedBarOptions(
+            [{ name: 'Fully Paid', data: openAccGroupedFp }, { name: 'Charged Off', data: openAccGroupedCo }],
+            openAccGroupedLabels
+        );
+        var chart26 = new ApexCharts(document.querySelector("#openAccGroupedChart"), options26);
+        chart26.render();
         
+    
+        createRateErrorPlot('openAccRateChart', openAccRateLabels, openAccRateData, '');
+
+
+
+        var options27 = createGroupedBarOptions(
+            [{ name: 'Fully Paid', data: totalAccGroupedFp }, { name: 'Charged Off', data: totalAccGroupedCo }],
+            totalAccGroupedLabels
+        );
+        var chart27 = new ApexCharts(document.querySelector("#totalAccGroupedChart"), options27);
+        chart27.render();
+        
+        createRateErrorPlot('totalAccRateChart', totalAccRateLabels, totalAccRateData, '');
+
+        if (document.getElementById('openTotalAccBoxPlot')) {
+            const openTotalAccBoxPlotData = openTotalAccBoxPlotDataRaw.filter(trace => trace.y && trace.y.length > 0);
+            if (openTotalAccBoxPlotData.length > 0) {
+                const openTotalAccLayout = {
+                    ...plotlyLayoutTemplate, height: 400, title: '',
+                    margin: { l: 60, r: 20, b: 80, t: 50, pad: 4 },
+                    yaxis: { title: 'Open / Total Account Rate', gridcolor: '#555', tickformat: '.0%' },
+                    xaxis: { title: 'Loan Status', gridcolor: '#555' },
+                    boxmode: 'group', showlegend: false
+                };
+                openTotalAccBoxPlotData.forEach(trace => {
+                    if (trace.name === 'Fully Paid') { trace.marker = {color: '#009B77'}; } 
+                    else if (trace.name === 'Charged Off') { trace.marker = {color: '#BC243C'}; }
+                });
+                Plotly.newPlot('openTotalAccBoxPlot', openTotalAccBoxPlotData, openTotalAccLayout, {responsive: true, displayModeBar: false});
+            } else {
+                document.getElementById('openTotalAccBoxPlot').innerHTML = '<p class="text-center text-muted">Görüntülenecek veri bulunamadı.</p>';
+            }
+        }
+        
+        
+        var options28 = {
+            series: [{ name: 'Fully Paid', data: openTotalAccHistFp }, { name: 'Charged Off', data: openTotalAccHistCo }],
+            chart: { height: 400, type: 'area', foreColor: '#aeb4c6', toolbar: { show: false } },
+            colors: ['#009B77', '#BC243C'],
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth', width: 2 },
+            xaxis: {
+                type: 'numeric', categories: openTotalAccHistLabels,
+                labels: { formatter: function(val) { return (val * 100).toFixed(0) + '%'; } },
+                title: { text: 'Open / Total Account Rate' }
+            },
+            yaxis: { title: { text: 'Frequency (Count of Loans)' }, labels: { formatter: function(val) { return val.toLocaleString(); } } },
+            tooltip: { 
+                theme: 'dark',
+                x: { formatter: function(val) { return "Rate: " + (val * 100).toFixed(2) + '%'; } },
+                y: { formatter: function(val) { return val.toLocaleString(); } }
+            },
+            grid: { borderColor: '#555' },
+            legend: { position: 'top' }
+        };
+        var chart28 = new ApexCharts(document.querySelector("#openTotalAccHistChart"), options28);
+        chart28.render();
+
+
+        if (document.getElementById('revolBalBoxPlot')) {
+            const revolBalBoxPlotData = revolBalBoxPlotDataRaw.filter(trace => trace.y && trace.y.length > 0);
+            if (revolBalBoxPlotData.length > 0) {
+                const layout = { ...plotlyLayoutTemplate, height: 400, title: 'Revolving Balance by Loan Status', margin: { l: 60, r: 20, b: 50, t: 50 }, yaxis: { title: 'Revolving Balance ($)', gridcolor: '#555', hoverformat: ',.0f' }, xaxis: { title: '', gridcolor: '#555' }, boxmode: 'group', showlegend: true };
+                revolBalBoxPlotData.forEach(trace => { if (trace.name === 'Fully Paid') { trace.marker = {color: '#009B77'}; } else if (trace.name === 'Charged Off') { trace.marker = {color: '#BC243C'}; } });
+                Plotly.newPlot('revolBalBoxPlot', revolBalBoxPlotData, layout, {responsive: true, displayModeBar: false});
+            } else { document.getElementById('revolBalBoxPlot').innerHTML = '<p class="text-center text-muted">Veri bulunamadı.</p>'; }
+        }
+        
+
+        var options29 = {
+            series: [{ name: 'Fully Paid', data: revolBalHistFp }, { name: 'Charged Off', data: revolBalHistCo }], chart: { height: 400, type: 'area', foreColor: '#aeb4c6', toolbar: { show: false } }, colors: ['#009B77', '#BC243C'], dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+            xaxis: { type: 'numeric', categories: revolBalHistLabels, labels: { formatter: function(val) { return (val/1000).toFixed(0) + 'k'; } }, title: { text: '' } },
+            yaxis: { title: { text: 'Frequency' }, labels: { formatter: function(val) { return val.toLocaleString(); } } },
+            tooltip: { theme: 'dark', x: { formatter: function(val) { return "Balance: $" + val.toLocaleString(undefined, {maximumFractionDigits:0}); } }, y: { formatter: function(val) { return val.toLocaleString(); } } },
+            grid: { borderColor: '#555' }, legend: { position: 'top' }
+        };
+        var chart29 = new ApexCharts(document.querySelector("#revolBalHistChart"), options29);
+        chart29.render();
+
+        if (document.getElementById('revolUtilBoxPlot')) {
+            const revolUtilBoxPlotData = revolUtilBoxPlotDataRaw.filter(trace => trace.y && trace.y.length > 0);
+            if (revolUtilBoxPlotData.length > 0) {
+                const layout = { ...plotlyLayoutTemplate, height: 400, title: 'Revolving Utilization by Loan Status', margin: { l: 60, r: 20, b: 50, t: 50 }, yaxis: { title: 'Revolving Utilization', gridcolor: '#555', tickformat: '.0%' }, xaxis: { title: '', gridcolor: '#555' }, boxmode: 'group', showlegend: true };
+                revolUtilBoxPlotData.forEach(trace => { if (trace.name === 'Fully Paid') { trace.marker = {color: '#009B77'}; } else if (trace.name === 'Charged Off') { trace.marker = {color: '#BC243C'}; } });
+                Plotly.newPlot('revolUtilBoxPlot', revolUtilBoxPlotData, layout, {responsive: true, displayModeBar: false});
+            } else { document.getElementById('revolUtilBoxPlot').innerHTML = '<p class="text-center text-muted">Veri bulunamadı.</p>'; }
+        }
+
+        var options30 = {
+            series: [{ name: 'Fully Paid', data: revolUtilHistFp }, { name: 'Charged Off', data: revolUtilHistCo }], chart: { height: 400, type: 'area', foreColor: '#aeb4c6', toolbar: { show: false } }, colors: ['#009B77', '#BC243C'], dataLabels: { enabled: false }, stroke: { curve: 'smooth', width: 2 },
+            xaxis: { type: 'numeric', categories: revolUtilHistLabels, labels: { formatter: function(val) { return val.toFixed(0) + '%'; } }, title: { text: '' } },
+            yaxis: { title: { text: 'Frequency' }, labels: { formatter: function(val) { return val.toLocaleString(); } } },
+            tooltip: { theme: 'dark', x: { formatter: function(val) { return "Utilization: " + val.toFixed(2) + '%'; } }, y: { formatter: function(val) { return val.toLocaleString(); } } },
+            grid: { borderColor: '#555' }, legend: { position: 'top' }
+        };
+        var chart30 = new ApexCharts(document.querySelector("#revolUtilHistChart"), options30);
+        chart30.render();
+
+
+        var options31 = createGroupedBarOptions(
+            [{ name: 'Fully Paid', data: pubRecGroupedFp }, { name: 'Charged Off', data: pubRecGroupedCo }],
+            pubRecGroupedLabels
+        );
+        var chart31 = new ApexCharts(document.querySelector("#pubRecGroupedChart"), options31);
+        chart31.render();
+        
+        
+        createRateErrorPlot('pubRecRateChart', pubRecRateLabels, pubRecRateData, 'Default Rate by Public Records');
+
+        
+        var options32 = createGroupedBarOptions(
+            [{ name: 'Fully Paid', data: pubRecBankGroupedFp }, { name: 'Charged Off', data: pubRecBankGroupedCo }],
+            pubRecBankGroupedLabels
+        );
+        var chart32 = new ApexCharts(document.querySelector("#pubRecBankGroupedChart"), options32);
+        chart32.render();
+
+        
+        createRateErrorPlot('pubRecBankRateChart', pubRecBankRateLabels, pubRecBankRateData, 'Default Rate by Pub. Rec. Bankruptcies');
+
+    }
+
 });
 // Sınır 
 

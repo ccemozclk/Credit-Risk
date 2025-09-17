@@ -33,13 +33,6 @@ The core of the project involves training and comparing several classification m
 - **End-to-End Pipeline:** Covers the complete project lifecycle from data exploration and feature engineering to model training and deployment.
 - **Dockerized Application:** The entire project is containerized, allowing for a seamless and consistent setup across different environments.
 
-## Screenshots
-
-*Main Dashboard*
-![Dashboard Screenshot](path/to/your/screenshot1.png)
-
-*Model Prediction Page*
-![Prediction Screenshot](path/to/your/screenshot2.png)
 
 ## Tech Stack
 

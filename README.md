@@ -107,36 +107,58 @@ If you prefer to run the application locally without Docker:
 │   └── train.csv
 ├── logs/
 │   └── ... (Log files from different runs)
-├── notebooks/
-│   └── research.ipynb
+├── notebook/
+│   └── 01.Explatory-Data-Analysis.ipynb
+│   └── 02.Data-Preparation-Feature-Engineering.ipynb
+│   └── data
+│       └── lending_club_loan_two.csv
+├── CreditRiskPrediction/
+│    ├── __init__.py
+│    ├── asgi.py
+│    ├── settings.py
+│    ├── urls.py
+│    └── wsgi.py
+├── predictor/
+│    ├── migrations
+│    │    └── __init__.py
+│    ├── __init__.py
+│    ├── admin.py
+│    ├── apps.py
+│    ├── models.py
+│    ├── urls.py
+│    ├── views.py
+│    └── test.py
 ├── src/
-│   ├── CreditRiskPrediction/
-│   │   ├── __init__.py
-│   │   ├── asgi.py
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
 │   ├── components/
 │   │   ├── __init__.py
 │   │   ├── data_ingestion.py
 │   │   ├── data_transformation.py
-│   │   ├── model_evaluation.py
 │   │   └── model_trainer.py
 │   ├── pipeline/
 │   │   ├── __init__.py
-│   │   ├── prediction_pipeline.py
-│   │   └── training_pipeline.py
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   └── utils.py
+│   │   ├── predict_pipeline.py
+│   │   └── train_pipeline.py
 │   ├── __init__.py
-│   ├── constants.py
-│   ├── entity.py
 │   ├── exception.py
-│   └── logger.py
+│   ├── logger.py
+│   └── utils.py
 ├── templates/
-│   ├── home.html
-│   └── results.html
+│   ├── explatory_data_analysis.html
+│   ├── index.html
+│   └── model.html
+├── static/
+│   ├── assets/
+│   │   └── 
+│   ├── css/
+│   │    └── 
+│   ├── document/
+│   │    └── resume.pdf
+│   ├── images/
+│   │    └── 
+│   ├── js/
+│   │    └── 
+│   └── scss
+│       └── 
 ├── .dockerignore
 ├── .gitignore
 ├── db.sqlite3
